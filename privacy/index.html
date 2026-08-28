@@ -64,34 +64,34 @@
       <section id="who">
         <h2>1. Who we are</h2>
         <p>
-          This Privacy Policy describes how the <strong>GubbiGo</strong> language-learning app
-          (“we”, “us”) handles information.
+          This Privacy Policy describes how the <strong>GubbiGo</strong> Indian language-learning
+          app (“we”, “us”) handles information.
         </p>
         <p>
           GubbiGo does not require you to create an account or sign in with email. We do not
           operate our own payment or subscription servers. Google Play (and the App Store, if you
-          install GubbiGo on iOS) bill subscriptions. We use RevenueCat only to confirm whether
-          a paid entitlement is active.
+          install GubbiGo on iOS) bill Super. We use RevenueCat — a service that tells the app
+          whether Super is paid and active.
         </p>
       </section>
 
       <section id="summary">
         <h2>2. Summary</h2>
         <div class="note">
-          Learning progress stays on your device. We do not collect your name, email, or payment
-          card details. We do not show ads. Early lessons are free. A Super subscription (monthly
-          or yearly) unlocks later lessons. Google Play or Apple charges and renews that
-          subscription. RevenueCat tells the app whether Super is active. Expo and our content CDN
-          may be contacted for updates and language packs.
+          Lesson progress stays on your device. We do not collect your name, email, or payment
+          card details. We do not show ads. Early lessons are free. Super (monthly or yearly)
+          unlocks later lessons. Google Play or the App Store charges and renews Super. RevenueCat
+          tells the app whether Super is paid and active. When you are online, the app may also
+          contact Expo for updates and our content host for language packs.
         </div>
         <p>This policy covers:</p>
         <ul>
-          <li>data stored locally by GubbiGo (including a cached Super / premium flag);</li>
+          <li>data stored locally by GubbiGo (including a cached Super status);</li>
           <li>
             technical and purchase data processed by Google Play, Apple (if applicable),
             RevenueCat, Expo, and our content host;
           </li>
-          <li>auto-renewing subscriptions and restore purchases (no GubbiGo login).</li>
+          <li>auto-renewing Super and Restore purchases (no GubbiGo login).</li>
         </ul>
       </section>
 
@@ -107,8 +107,8 @@
           <li>XP, streaks, and in-app rewards (such as seeds and collectibles);</li>
           <li>downloaded lesson content and audio stored for playback;</li>
           <li>
-            a cached Super / premium status (and expiry if known), used so locked lessons stay
-            unlocked offline after a successful check.
+            a cached Super status (and expiry if known), used so locked lessons stay unlocked
+            offline after a successful check.
           </li>
         </ul>
         <p>
@@ -161,10 +161,9 @@
             <tr>
               <td>RevenueCat</td>
               <td>
-                Validate store receipts and answer whether the Super entitlement is active
-                (including after renew, cancel, refund, or restore). RevenueCat assigns an
-                anonymous app user ID to this install until you restore on another device with the
-                same store account.
+                A service that tells the app whether Super is paid and active (after renew, cancel,
+                refund, or restore). It uses an anonymous ID for this install until you restore on
+                another device with the same store account.
               </td>
               <td>
                 <a href="https://www.revenuecat.com/privacy" rel="noopener noreferrer"
@@ -173,14 +172,14 @@
               </td>
             </tr>
             <tr>
-              <td>Expo (EAS Update)</td>
+              <td>Expo</td>
               <td>Optional app and content updates after install</td>
               <td>
                 <a href="https://expo.dev/privacy" rel="noopener noreferrer">Expo Privacy Policy</a>
               </td>
             </tr>
             <tr>
-              <td>Cloudflare (content hosting / R2)</td>
+              <td>Cloudflare (content hosting)</td>
               <td>Download of language packs (lessons and audio) over HTTPS</td>
               <td>
                 <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener noreferrer"
@@ -191,11 +190,13 @@
           </tbody>
         </table>
         <p>
-          RevenueCat’s dashboard shows subscription status (active, expired, cancelled, refunded)
-          so we can support paying users. That is purchase / entitlement data, not advertising
-          tracking. We do not currently include advertising, crash-reporting, or general product
-          analytics SDKs. We do not enable advertising identifiers (such as GAID / IDFA) for
-          GubbiGo.
+          RevenueCat’s dashboard shows Super status (active, expired, cancelled, refunded) so we
+          can support paying users. That is purchase data, not advertising tracking.
+        </p>
+        <h3>Technical detail</h3>
+        <p>
+          We do not currently include advertising, crash-reporting, or general product analytics
+          SDKs. We do not turn on advertising identifiers (used by some apps for ads) for GubbiGo.
         </p>
       </section>
 
@@ -207,35 +208,33 @@
           only in price and billing period.
         </p>
         <p>
-          If you subscribe, the store you installed from
-          <strong>charges, renews, retries failed payments, and refunds</strong> — Google Play on
-          Android, or Apple on iOS. We do not collect, store, or see your payment card number, UPI
-          ID, or store-account password. We do not run Stripe or any other card checkout inside
-          GubbiGo for lessons.
+          If you subscribe, Google Play on Android or Apple on iOS
+          <strong>charges, renews, retries failed payments, and refunds</strong>. We do not
+          collect, store, or see your payment card number, UPI ID, or store-account password. We
+          never take card numbers in the app.
         </p>
         <h3>What leaves the device for Super</h3>
         <ul>
           <li>the store purchase / receipt (handled by Google or Apple);</li>
           <li>
-            that receipt plus an anonymous RevenueCat app user ID, product ID, and entitlement
-            status (so the app can trust “Super is active”);
+            that receipt plus an anonymous RevenueCat ID, product ID, and Super status (so the app
+            can trust that Super is active);
           </li>
           <li>
-            a local Super flag cached in GubbiGo after a successful check, used while you are
+            a local Super status cached in GubbiGo after a successful check, used while you are
             offline.
           </li>
         </ul>
         <p>
-          We do <em>not</em> send your lesson scores, streak, or which node you finished to Google,
-          Apple, or RevenueCat. The paywall is decided in the app from local progress plus Super
-          status.
+          We do <em>not</em> send your lesson scores, streak, or which map node you finished to
+          Google, Apple, or RevenueCat. Whether later lessons stay locked is decided in the app
+          from local progress plus Super status.
         </p>
         <h3>Renewal, cancel, restore</h3>
         <ul>
           <li>
-            Super auto-renews until you cancel in Google Play (or App Store on iOS). Price,
-            period, and auto-renewal are shown on the paywall and again by the store before you
-            pay.
+            Super auto-renews until you cancel in Google Play (or the App Store on iOS). Price,
+            period, and auto-renewal are shown before you pay in the app and again by the store.
           </li>
           <li>
             If you cancel, Super stays active until the end of the paid period, then later lessons
@@ -248,7 +247,7 @@
           </li>
           <li>
             A refund or chargeback turns Super off after the store notifies RevenueCat and the app
-            next refreshes entitlement (including on launch when online).
+            next checks Super (including on launch when online).
           </li>
         </ul>
         <p>
@@ -256,7 +255,8 @@
           <a href="https://play.google.com/store/account/subscriptions" rel="noopener noreferrer"
             >Google Play subscriptions</a
           >
-          (Android) or Settings → Apple ID → Subscriptions (iOS). Payment details are also covered
+          (Android) or Settings → Apple ID → Subscriptions (iOS). Step-by-step cancel and restore
+          is on <a href="../support/">Support</a>. Payment details are also covered
           by the
           <a
             href="https://payments.google.com/payments/apis-secure/get_legal_document?ldo=0&amp;ldt=privacynotice&amp;ldl=en"
@@ -307,12 +307,12 @@
         <ul>
           <li>
             <strong>Internet</strong> — to download language packs, check for app updates, complete
-            store purchases, restore Super, and refresh entitlement with RevenueCat;
+            store purchases, restore Super, and check Super with RevenueCat;
           </li>
           <li><strong>Audio playback</strong> — to play lesson and word audio;</li>
           <li>
             <strong>Local storage</strong> — to keep progress, downloaded content, and the cached
-            Super flag.
+            Super status.
           </li>
         </ul>
         <p>
@@ -326,7 +326,7 @@
         <ul>
           <li>
             <strong>On-device data:</strong> remains until you clear app storage or uninstall
-            GubbiGo. Uninstalling deletes local progress and the cached Super flag. It does
+            GubbiGo. Uninstalling deletes local progress and the cached Super status. It does
             <em>not</em> cancel a Super subscription.
           </li>
           <li>
@@ -334,15 +334,15 @@
             policies. Cancel in the store to stop renewal.
           </li>
           <li>
-            <strong>RevenueCat:</strong> retains entitlement and receipt metadata for that
+            <strong>RevenueCat:</strong> keeps Super status and receipt metadata for that
             anonymous (or restored) customer so Super can be checked and restored. If you ask us
             to delete this, we will request deletion from RevenueCat where the product allows. The
             store will still have its own purchase record.
           </li>
           <li>
-            <strong>CDN / update logs:</strong> technical request logs, if any, are retained by
-            Expo or Cloudflare under their policies. We do not keep a GubbiGo user profile (name,
-            email, password) on our servers.
+            <strong>Download and update logs:</strong> technical request logs, if any, are retained
+            by Expo or Cloudflare under their policies. We do not keep a GubbiGo user profile
+            (name, email, password) on our servers.
           </li>
         </ul>
       </section>
@@ -359,8 +359,9 @@
           <li>
             email
             <a href="mailto:developer@xlang.in">developer@xlang.in</a>
-            to ask what information we hold or to request deletion of RevenueCat customer data we
-            can control.
+            (subject “Delete GubbiGo data”) to ask what information we hold or to request deletion
+            of Super records we can control. Steps for cancel and restore are on
+            <a href="../support/">Support</a>.
           </li>
         </ul>
         <p>
@@ -413,7 +414,7 @@
             <img src="../logo.svg" width="36" height="36" alt="" />
             <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
           </a>
-          <p>Kannada lessons that stay on your device.</p>
+          <p>Indian language lessons that stay on your device.</p>
         </div>
         <nav class="footer-links" aria-label="Footer">
           <a href="../privacy/">Privacy</a>
