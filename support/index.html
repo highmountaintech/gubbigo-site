@@ -3,19 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173B63" />
     <meta
       name="description"
       content="Support for GubbiGo: contact, cancel Super, restore purchases, and delete on-device progress."
     />
     <title>Support — GubbiGo</title>
     <link rel="icon" href="../favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <div class="wrap">
-      <header class="site-header">
-        <a class="wordmark" href="../" aria-label="GubbiGo home">
-          <span class="gubbi">Gubbi</span><span class="go">Go</span>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="GubbiGo home">
+          <img src="../logo.svg" width="36" height="36" alt="" />
+          <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
         </a>
         <nav class="site-nav" aria-label="Site">
           <a href="../">Home</a>
@@ -23,9 +31,12 @@
           <a href="../terms/">Terms</a>
           <a href="./" aria-current="page">Support</a>
         </nav>
-      </header>
+      </div>
+    </header>
 
+    <main class="page">
       <div class="page-header">
+        <p class="eyebrow">Help</p>
         <h1>Support</h1>
         <p class="lede">
           For app questions, parent requests, or deletion of data we control, email
@@ -33,7 +44,7 @@
         </p>
       </div>
 
-      <section>
+      <div class="contact-panel">
         <h2>Contact</h2>
         <p>
           Email:
@@ -43,62 +54,71 @@
           Do not send payment card details or Google / Apple passwords. For a charge you do not
           recognize, use Google Play or App Store support as well.
         </p>
-      </section>
+      </div>
 
-      <section>
-        <h2>Cancel Super</h2>
-        <p>
-          Super is billed by the store, not inside a GubbiGo profile. Cancel auto-renewal here:
-        </p>
-        <ul>
-          <li>
-            Android:
-            <a href="https://play.google.com/store/account/subscriptions" rel="noopener noreferrer"
-              >Google Play subscriptions</a
-            >
-          </li>
-          <li>iOS: Settings → Apple ID → Subscriptions</li>
-        </ul>
-        <p>
-          After you cancel, Super stays on until the end of the period you already paid for. Free
-          lessons keep working after that.
-        </p>
-      </section>
+      <div class="faq">
+        <article>
+          <h2>Cancel Super</h2>
+          <p>Super is billed by the store, not inside a GubbiGo profile. Cancel auto-renewal here:</p>
+          <ul>
+            <li>
+              Android:
+              <a href="https://play.google.com/store/account/subscriptions" rel="noopener noreferrer"
+                >Google Play subscriptions</a
+              >
+            </li>
+            <li>iOS: Settings → Apple ID → Subscriptions</li>
+          </ul>
+          <p>
+            After you cancel, Super stays on until the end of the period you already paid for. Free
+            lessons keep working after that.
+          </p>
+        </article>
+        <article>
+          <h2>Restore on a new phone</h2>
+          <p>
+            Sign in to the same Google or Apple account you used to subscribe, install GubbiGo, and
+            use Restore purchases in the app (when you are online). There is no GubbiGo login.
+          </p>
+        </article>
+        <article>
+          <h2>Progress disappeared</h2>
+          <p>
+            Progress is stored on that device. Clearing app storage, uninstalling, or switching
+            phones without backing up the device can remove it. That does not cancel Super; restore
+            Super as above, then continue from free or unlocked lessons on the new install.
+          </p>
+        </article>
+        <article>
+          <h2>Privacy and deletion</h2>
+          <p>
+            Uninstalling GubbiGo deletes local progress. To ask us to delete RevenueCat customer
+            data we can control, email
+            <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+            and say it is a deletion request. See the <a href="../privacy/">Privacy Policy</a> for
+            what we hold and what stays with Google, Apple, Expo, or Cloudflare.
+          </p>
+        </article>
+      </div>
+    </main>
 
-      <section>
-        <h2>Restore on a new phone</h2>
-        <p>
-          Sign in to the same Google or Apple account you used to subscribe, install GubbiGo, and
-          use Restore purchases in the app (when you are online). There is no GubbiGo login.
-        </p>
-      </section>
-
-      <section>
-        <h2>Progress disappeared</h2>
-        <p>
-          Progress is stored on that device. Clearing app storage, uninstalling, or switching
-          phones without backing up the device can remove it. That does not cancel Super; restore
-          Super as above, then continue from free or unlocked lessons on the new install.
-        </p>
-      </section>
-
-      <section>
-        <h2>Privacy and deletion</h2>
-        <p>
-          Uninstalling GubbiGo deletes local progress. To ask us to delete RevenueCat customer
-          data we can control, email
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="../" aria-label="GubbiGo home">
+            <img src="../logo.svg" width="36" height="36" alt="" />
+            <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+          </a>
+          <p>Kannada lessons that stay on your device.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="./">Support</a>
           <a href="mailto:developer@xlang.in">developer@xlang.in</a>
-          and say it is a deletion request. See the <a href="../privacy/">Privacy Policy</a> for
-          what we hold and what stays with Google, Apple, Expo, or Cloudflare.
-        </p>
-      </section>
-
-      <footer>
-        <p>
-          <a href="../privacy/">Privacy Policy</a> ·
-          <a href="../terms/">Terms of Use</a>
-        </p>
-      </footer>
-    </div>
+        </nav>
+        <p class="copyright">© 2026 GubbiGo</p>
+      </div>
+    </footer>
   </body>
 </html>

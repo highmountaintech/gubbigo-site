@@ -3,19 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173B63" />
     <meta
       name="description"
-      content="GubbiGo is a local-first Kannada learning app. Progress stays on your device. No ads. No account."
+      content="GubbiGo is a local-first Kannada learning app. Progress stays on your device. We do not show ads. No account required."
     />
     <title>GubbiGo — Learn Kannada on your device</title>
     <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="wrap">
-      <header class="site-header">
-        <a class="wordmark" href="./" aria-label="GubbiGo home">
-          <span class="gubbi">Gubbi</span><span class="go">Go</span>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./" aria-label="GubbiGo home">
+          <img src="logo.svg" width="36" height="36" alt="" />
+          <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
         </a>
         <nav class="site-nav" aria-label="Site">
           <a href="./" aria-current="page">Home</a>
@@ -23,26 +31,35 @@
           <a href="terms/">Terms</a>
           <a href="support/">Support</a>
         </nav>
-      </header>
+      </div>
+    </header>
 
-      <div class="page-header">
-        <h1>Learn Kannada on your device</h1>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Kannada learning app</p>
+        <h1>Learn on your device. Keep it there.</h1>
         <p class="lede">
-          GubbiGo is a language-learning app for structured Kannada. Lessons, audio, and progress
-          stay on the phone. There is no account to create and no ads in the app.
+          Structured Kannada lessons with native audio, phonetics, and a mascot named Gubbi.
+          Progress never leaves the phone. There is no account to create and no ads in the app.
         </p>
+        <div class="pills" aria-label="Highlights">
+          <span class="pill">No ads</span>
+          <span class="pill">No login</span>
+          <span class="pill">Works offline</span>
+          <span class="pill">Android &amp; iOS</span>
+        </div>
         <div class="actions">
           <a class="btn" href="privacy/">Privacy Policy</a>
           <a class="btn btn-secondary" href="support/">Get support</a>
         </div>
-      </div>
+      </section>
 
-      <section>
-        <h2>About GubbiGo</h2>
+      <section class="about">
+        <h2 class="section-title">How it works</h2>
         <p>
           You follow an adventure map of short lessons: listening, vocabulary, fill-in-the-blank,
-          Subject–Object–Verb sentence building, and chats with the mascot Gubbi. Phonetic text
-          sits next to Kannada script so you can read along before you know the letters.
+          Subject–Object–Verb sentence building, and chats with Gubbi. Phonetic text sits next to
+          Kannada script so you can read along before you know the letters.
         </p>
         <p>
           Early lessons are free. Later lessons unlock with an optional <strong>Super</strong>
@@ -59,7 +76,7 @@
           </p>
         </article>
         <article class="card">
-          <h2>No ads, no login</h2>
+          <h2>Private by design</h2>
           <p>
             GubbiGo does not show third-party ads and does not ask for email sign-in. A parent or
             guardian can sit with a child without creating a GubbiGo profile.
@@ -68,53 +85,71 @@
         <article class="card">
           <h2>Billed by the store</h2>
           <p>
-            Super is sold and renewed by Google Play or the App Store. There is no card form
-            inside GubbiGo.
+            Super is sold and renewed by Google Play or the App Store. Payment details stay with
+            the store, not with GubbiGo.
           </p>
         </article>
       </div>
 
-      <section>
-        <h2>App details</h2>
-        <table>
-          <tbody>
-            <tr>
-              <th>App</th>
-              <td>GubbiGo</td>
-            </tr>
-            <tr>
-              <th>Platforms</th>
-              <td>Android, iOS</td>
-            </tr>
-            <tr>
-              <th>Language shipped</th>
-              <td>Kannada (more languages planned as downloadable packs)</td>
-            </tr>
-            <tr>
-              <th>Contact</th>
-              <td><a href="mailto:developer@xlang.in">developer@xlang.in</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      <h2 class="section-title">App details</h2>
+      <table class="facts">
+        <tbody>
+          <tr>
+            <th>App</th>
+            <td>GubbiGo</td>
+          </tr>
+          <tr>
+            <th>Platforms</th>
+            <td>Android and iOS</td>
+          </tr>
+          <tr>
+            <th>Language</th>
+            <td>Kannada, with more packs planned</td>
+          </tr>
+          <tr>
+            <th>Contact</th>
+            <td><a href="mailto:developer@xlang.in">developer@xlang.in</a></td>
+          </tr>
+        </tbody>
+      </table>
 
-      <section>
-        <h2>Legal</h2>
-        <ul>
-          <li><a href="privacy/">Privacy Policy</a> — what stays on the device and what stores process</li>
-          <li><a href="terms/">Terms of Use</a> — license, Super, cancel, and restore</li>
-          <li><a href="support/">Support</a> — billing, restore, and deletion requests</li>
-        </ul>
-      </section>
+      <h2 class="section-title">Policies</h2>
+      <ul class="legal-links">
+        <li>
+          <a href="privacy/"
+            >Privacy Policy <span>What stays on the device and what stores process</span></a
+          >
+        </li>
+        <li>
+          <a href="terms/"
+            >Terms of Use <span>License, Super, cancel, and restore purchases</span></a
+          >
+        </li>
+        <li>
+          <a href="support/"
+            >Support <span>Billing, restore, and deletion requests</span></a
+          >
+        </li>
+      </ul>
+    </main>
 
-      <footer>
-        <p>
-          GubbiGo ·
-          <a href="privacy/">Privacy</a> ·
-          <a href="terms/">Terms</a> ·
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="./" aria-label="GubbiGo home">
+            <img src="logo.svg" width="36" height="36" alt="" />
+            <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+          </a>
+          <p>Kannada lessons that stay on your device.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="privacy/">Privacy</a>
+          <a href="terms/">Terms</a>
           <a href="support/">Support</a>
-        </p>
-      </footer>
-    </div>
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+        </nav>
+        <p class="copyright">© 2026 GubbiGo</p>
+      </div>
+    </footer>
   </body>
 </html>
