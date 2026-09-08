@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173B63" />
+    <meta
+      name="description"
+      content="Request deletion of your GubbiGo account and the data we control. Uninstalling the app removes on-device progress. Super is cancelled in Google Play or the App Store."
+    />
+    <title>Delete my data — GubbiGo</title>
+    <link rel="icon" href="../favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="GubbiGo home">
+          <img src="../logo.svg" width="36" height="36" alt="" />
+          <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site">
+          <a href="../">Home</a>
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./" aria-current="page">Delete data</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-header">
+        <p class="eyebrow">Privacy</p>
+        <h1>Delete my data</h1>
+        <p class="lede">
+          Use this form to ask us to delete your GubbiGo account and the data we control. You do
+          not need to be signed in to the app. We aim to complete a valid request within
+          <strong>30 days</strong>.
+        </p>
+      </div>
+
+      <article class="doc">
+        <div class="note">
+          Uninstalling GubbiGo (or clearing app storage) deletes lessons, scores, and cached Super
+          status on that phone. It does <em>not</em> cancel Super. Cancel Super in
+          <a href="https://play.google.com/store/account/subscriptions" rel="noopener noreferrer"
+            >Google Play</a
+          >
+          or Settings → Apple ID → Subscriptions.
+        </div>
+
+        <h2>What we delete when you submit this form</h2>
+        <p>If we can match your request to an account, we delete:</p>
+        <ul>
+          <li>your GubbiGo sign-in (anonymous Firebase user, or Google-linked account);</li>
+          <li>cloud lesson progress stored for that user;</li>
+          <li>
+            the Super / RevenueCat customer record we can control for that user (the store still
+            keeps its own purchase history).
+          </li>
+        </ul>
+
+        <h2>What we cannot delete from this form</h2>
+        <ul>
+          <li>
+            <strong>On-device data</strong> — only you can remove it, by uninstalling or clearing
+            app storage.
+          </li>
+          <li>
+            <strong>Super billing</strong> — Google or Apple keep the purchase record. Cancel
+            auto-renewal in the store so Super does not renew.
+          </li>
+          <li>
+            <strong>Technical logs</strong> — Expo or Cloudflare may retain ordinary request logs
+            under their own policies. See the
+            <a href="../privacy/">Privacy Policy</a>.
+          </li>
+        </ul>
+        <p>
+          If we cannot find a matching account, we will still email you (at the address you give
+          below) and tell you what we checked.
+        </p>
+
+        <h2>How to identify your account</h2>
+        <p>
+          If you tapped <strong>Save progress with Google</strong>, use that Google account email.
+          If you never saved with Google, on-device data is already gone after uninstall; we may
+          have little or nothing on our servers unless Super was bought on that install.
+        </p>
+        <p>Do not send payment card details or Google / Apple passwords.</p>
+
+        <form
+          id="delete-request-form"
+          class="request-form"
+          action="https://formsubmit.co/developer@xlang.in"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="Delete my data" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_honey" value="" />
+          <div class="hp" aria-hidden="true">
+            <label>
+              Company
+              <input type="text" name="company" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email we should reply to</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              inputmode="email"
+              placeholder="you@example.com"
+            />
+            <p class="form-hint">We use this to confirm the request and tell you when it is done.</p>
+          </div>
+
+          <div class="form-field">
+            <label for="google_email">Google account used in GubbiGo (if any)</label>
+            <input
+              id="google_email"
+              name="google_email"
+              type="email"
+              autocomplete="off"
+              inputmode="email"
+              placeholder="Same as above, or leave blank"
+            />
+            <p class="form-hint">
+              Fill this if you saved progress with Google and that address is different from the
+              reply email.
+            </p>
+          </div>
+
+          <div class="form-field">
+            <label for="platform">Where you installed GubbiGo</label>
+            <select id="platform" name="platform" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="android">Android (Google Play)</option>
+              <option value="ios">iOS (App Store)</option>
+              <option value="both">Both</option>
+              <option value="unsure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="saved_with_google">Did you save progress with Google?</label>
+            <select id="saved_with_google" name="saved_with_google" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="unsure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="details">Anything else that helps us find the account (optional)</label>
+            <textarea
+              id="details"
+              name="details"
+              rows="4"
+              maxlength="2000"
+              placeholder="For example: Super order ID, approximate sign-up date, or the learning language."
+            ></textarea>
+          </div>
+
+          <label class="form-check">
+            <input id="confirm_delete" name="confirm_delete" type="checkbox" value="yes" required />
+            <span>
+              I want GubbiGo to delete my account and the associated data you control, as described
+              on this page.
+            </span>
+          </label>
+
+          <label class="form-check">
+            <input
+              id="confirm_subscription"
+              name="confirm_subscription"
+              type="checkbox"
+              value="yes"
+              required
+            />
+            <span>
+              I understand that Super is cancelled only in Google Play or the App Store, not by
+              this form.
+            </span>
+          </label>
+
+          <div class="form-actions">
+            <button class="btn" id="delete-submit" type="submit">Send deletion request</button>
+            <a
+              class="btn btn-secondary"
+              href="mailto:developer@xlang.in?subject=Delete%20my%20data"
+              >Email instead</a
+            >
+          </div>
+
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="doc-note">
+          Requests go to
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>. See also
+          <a href="../privacy/">Privacy</a>
+          and
+          <a href="../support/">Support</a>.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="../" aria-label="GubbiGo home">
+            <img src="../logo.svg" width="36" height="36" alt="" />
+            <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+          </a>
+          <p>Indian language lessons that stay on your device.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./">Delete data</a>
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+        </nav>
+        <p class="copyright">© 2026 GubbiGo</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var form = document.getElementById("delete-request-form");
+        var statusEl = document.getElementById("form-status");
+        var submitBtn = document.getElementById("delete-submit");
+        if (!form || !statusEl || !submitBtn) return;
+
+        function setStatus(message, kind) {
+          statusEl.textContent = message;
+          statusEl.className = "form-status" + (kind ? " form-status-" + kind : "");
+        }
+
+        function mailtoBody(data) {
+          return [
+            "Please delete my GubbiGo account and associated data.",
+            "",
+            "Reply email: " + data.email,
+            "Google account in GubbiGo: " + (data.google_email || "(not provided)"),
+            "Platform: " + data.platform,
+            "Saved with Google: " + data.saved_with_google,
+            "Notes: " + (data.details || "(none)"),
+          ].join("\n");
+        }
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (form.elements.company && form.elements.company.value) {
+            setStatus("Request sent. We will email you at the address you provided.", "ok");
+            form.reset();
+            return;
+          }
+
+          var data = {
+            _subject: "Delete my data",
+            email: form.email.value.trim(),
+            google_email: form.google_email.value.trim(),
+            platform: form.platform.value,
+            saved_with_google: form.saved_with_google.value,
+            details: form.details.value.trim(),
+            confirm_delete: form.confirm_delete.checked ? "yes" : "no",
+            confirm_subscription: form.confirm_subscription.checked ? "yes" : "no",
+          };
+
+          submitBtn.disabled = true;
+          setStatus("Sending your request…");
+
+          fetch("https://formsubmit.co/ajax/developer@xlang.in", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error("Request failed");
+              return response.json();
+            })
+            .then(function () {
+              form.reset();
+              setStatus(
+                "Request sent. Check your inbox (including spam) for a confirmation, then wait for our reply. We aim to finish within 30 days.",
+                "ok"
+              );
+            })
+            .catch(function () {
+              var href =
+                "mailto:developer@xlang.in?subject=" +
+                encodeURIComponent("Delete my data") +
+                "&body=" +
+                encodeURIComponent(mailtoBody(data));
+              window.location.href = href;
+              setStatus(
+                "If your mail app did not open, email developer@xlang.in with the same details. Include the subject “Delete my data”.",
+                "warn"
+              );
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>
