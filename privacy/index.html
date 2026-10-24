@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#173B63" />
     <meta
       name="description"
-      content="Privacy Policy for GubbiGo. Progress stays on your device. We do not show ads. Subscriptions are billed by Google Play or the App Store; RevenueCat checks whether Super is active."
+      content="Privacy Policy for GubbiGo. Progress stays on your device and can sync to your account. Optional rewarded ads are offered only without Premium. Google Play bills Premium and seed packs."
     />
     <title>Privacy Policy — GubbiGo</title>
     <link rel="icon" href="../favicon.png" type="image/png" />
@@ -39,7 +39,7 @@
       <div class="page-header">
         <p class="eyebrow">Legal</p>
         <h1>Privacy Policy</h1>
-        <p class="meta">Effective date: 28 August 2026 · Last updated: 28 August 2026</p>
+        <p class="meta">Effective date: 25 October 2026 · Last updated: 25 October 2026</p>
       </div>
 
       <article class="doc">
@@ -50,8 +50,9 @@
           <li><a href="#who">Who we are</a></li>
           <li><a href="#summary">Summary</a></li>
           <li><a href="#on-device">Information stored on your device</a></li>
+          <li><a href="#account">Account and saved progress</a></li>
           <li><a href="#third-parties">Information processed by others</a></li>
-          <li><a href="#subscriptions">Subscriptions and payments</a></li>
+          <li><a href="#subscriptions">Premium, seeds, and payments</a></li>
           <li><a href="#ads">Advertising</a></li>
           <li><a href="#children">Children</a></li>
           <li><a href="#permissions">App permissions</a></li>
@@ -69,30 +70,32 @@
           app (“we”, “us”) handles information.
         </p>
         <p>
-          GubbiGo does not require you to create an account or sign in with email. We do not
-          operate our own payment or subscription servers. Google Play (and the App Store, if you
-          install GubbiGo on iOS) bill Super. We use RevenueCat — a service that tells the app
-          whether Super is paid and active.
+          The app works offline. On each install it creates a Firebase account id so progress can
+          be saved. You do not have to sign in. If you choose <strong>Save progress with Google</strong>,
+          Google sends that account’s email to Firebase Authentication. We do not operate our own
+          payment servers. Google Play bills Premium and seed packs. On an App Store build, Apple
+          bills those purchases. RevenueCat tells the app whether Premium is active.
         </p>
       </section>
 
       <section id="summary">
         <h2>2. Summary</h2>
         <div class="note">
-          Lesson progress stays on your device. We do not collect your name, email, or payment
-          card details. We do not show ads. Early lessons are free. Super (monthly or yearly)
-          unlocks later lessons. Google Play or the App Store charges and renews Super. RevenueCat
-          tells the app whether Super is paid and active. When you are online, the app may also
-          contact Expo for updates and our content host for language packs.
+          Lesson progress stays on your device and, when you are online, syncs to your Firebase
+          account. We do not collect your name, payment card, or UPI ID. We collect a Google email
+          only if you save progress with Google. Lessons use seeds. Seeds refill over time, seed
+          packs add more, and Premium is an optional subscription for unlimited seeds and no ads.
+          Without Premium, the app can offer an optional rewarded ad in exchange for one seed.
+          The app downloads language packs when you need them and may check Expo for an app update.
         </div>
         <p>This policy covers:</p>
         <ul>
-          <li>data stored locally by GubbiGo (including a cached Super status);</li>
+          <li>progress stored on the device, including a record of seed-pack orders;</li>
+          <li>the Firebase account and the progress saved for it;</li>
           <li>
-            technical and purchase data processed by Google Play, Apple (if applicable),
-            RevenueCat, Expo, and our content host;
+            purchase and technical data processed by Google Play, Apple (on an App Store build),
+            RevenueCat, Firebase, Google Sign-In, Google AdMob, Expo, and our content host.
           </li>
-          <li>auto-renewing Super and Restore purchases (no GubbiGo login).</li>
         </ul>
       </section>
 
@@ -103,28 +106,70 @@
           typically includes:
         </p>
         <ul>
-          <li>selected learning language;</li>
           <li>lesson and exercise progress, scores, and completion status;</li>
-          <li>XP, streaks, and in-app rewards (such as seeds and collectibles);</li>
+          <li>the language you speak and the language you are learning;</li>
+          <li>streaks, seed balance, and collected characters;</li>
           <li>downloaded lesson content and audio stored for playback;</li>
           <li>
-            a cached Super status (and expiry if known), used so locked lessons stay unlocked
-            offline after a successful check.
+            whether Premium is active, cached after a successful check so unlimited seeds still
+            work offline;
+          </li>
+          <li>
+            the Google Play order id for a seed pack, kept so that purchase is not granted again.
+            This record stays on the device after you sign out or delete the account. Uninstalling
+            the app removes it.
+          </li>
+          <li>
+            how many optional rewarded ads were watched today. This count stays on the device. It
+            is not part of the saved progress document.
           </li>
         </ul>
         <p>
-          Lesson progress is not uploaded to a GubbiGo account, because no such account exists. We
-          do not use on-device learning data to build an advertising profile.
+          We do not send lesson progress or your email to build an advertising profile. Premium
+          status is not written into the saved progress document.
+        </p>
+      </section>
+
+      <section id="account">
+        <h2>4. Account and saved progress</h2>
+        <p>
+          Every install receives a Firebase account id. Until you choose Google, that account is
+          anonymous: it has no name and no email. When the device is online, the app saves a
+          progress document for that id. The document can include:
+        </p>
+        <ul>
+          <li>the language you speak and the language you are learning;</li>
+          <li>streaks, the last active day, and the daily goal;</li>
+          <li>the seed balance and when seeds last refilled;</li>
+          <li>lesson and exercise results;</li>
+          <li>collected characters.</li>
+        </ul>
+        <p>
+          The progress document does not include your name, email, payment details, Premium
+          status, Play order ids, or how many ads you watched.
+        </p>
+        <p>
+          <strong>Save progress with Google</strong> is optional. If you use it, Google Sign-In
+          gives Firebase the email address of that Google account. The app shows the email on the
+          Premium screen. You do not type a password into GubbiGo. If that Google account already
+          has progress, the app asks before merging this device’s lessons into it.
+        </p>
+        <p>
+          Signing out clears lesson progress on this device and leaves the Google account’s saved
+          progress in Firebase. <strong>Delete account</strong> on the Premium screen is available
+          after you have saved progress with Google. It asks you to confirm with Google, then
+          deletes the progress document, deletes the Firebase account, and clears lesson progress
+          on this device. Purchases stay with the store. A new empty anonymous account then starts
+          on the device.
         </p>
       </section>
 
       <section id="third-parties">
-        <h2>4. Information processed by others</h2>
+        <h2>5. Information processed by others</h2>
         <p>
-          When the app uses the internet, third parties that deliver the service may see ordinary
-          technical data (for example IP address, device and app identifiers, timestamps, and
-          which files were requested). We do not receive your name from these services as part of
-          normal app use.
+          When the app uses the internet, the services below receive the data listed here. They
+          may also see ordinary technical data such as an IP address and a timestamp. We do not
+          sell this data.
         </p>
         <table>
           <thead>
@@ -136,10 +181,44 @@
           </thead>
           <tbody>
             <tr>
+              <td>Firebase Authentication</td>
+              <td>
+                Creates the account id. If you save progress with Google, stores that Google email
+                on the account. The email is not copied into the progress document.
+              </td>
+              <td>
+                <a href="https://firebase.google.com/support/privacy" rel="noopener noreferrer"
+                  >Firebase Privacy Information</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>Cloud Firestore</td>
+              <td>Stores the progress document described in section 4 while you are online</td>
+              <td>
+                <a href="https://firebase.google.com/support/privacy" rel="noopener noreferrer"
+                  >Firebase Privacy Information</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>Google Sign-In</td>
+              <td>
+                Optional. Used only when you save progress with Google or confirm account deletion.
+                Provides the Google email and a sign-in token. We do not receive your Google
+                password.
+              </td>
+              <td>
+                <a href="https://policies.google.com/privacy" rel="noopener noreferrer"
+                  >Google Privacy Policy</a
+                >
+              </td>
+            </tr>
+            <tr>
               <td>Google Play / Google Play Billing</td>
               <td>
-                App install, store updates, subscription purchase, renewal, cancel, refund, and
-                restore on Android
+                App install, store updates, Premium and seed-pack purchases, renewal, cancel,
+                refund, and restore on Android
               </td>
               <td>
                 <a href="https://policies.google.com/privacy" rel="noopener noreferrer"
@@ -150,8 +229,8 @@
             <tr>
               <td>Apple App Store / StoreKit</td>
               <td>
-                Same billing role on iOS if GubbiGo is installed from the App Store (purchase,
-                renewal, cancel, refund, restore)
+                Same billing role if GubbiGo is installed from the App Store (purchase, renewal,
+                cancel, refund, restore)
               </td>
               <td>
                 <a href="https://www.apple.com/legal/privacy/" rel="noopener noreferrer"
@@ -162,9 +241,9 @@
             <tr>
               <td>RevenueCat</td>
               <td>
-                A service that tells the app whether Super is paid and active (after renew, cancel,
-                refund, or restore). It uses an anonymous ID for this install until you restore on
-                another device with the same store account.
+                Tells the app whether Premium is active, including after renew, cancel, refund, or
+                restore. The customer id is the Firebase account id. RevenueCat does not receive
+                lesson scores or your email from us.
               </td>
               <td>
                 <a href="https://www.revenuecat.com/privacy" rel="noopener noreferrer"
@@ -174,14 +253,38 @@
             </tr>
             <tr>
               <td>Expo</td>
-              <td>Optional app and content updates after install</td>
+              <td>
+                App updates after install. The check includes the app version, platform, and an
+                update client id. It does not include your lessons or email.
+              </td>
               <td>
                 <a href="https://expo.dev/privacy" rel="noopener noreferrer">Expo Privacy Policy</a>
               </td>
             </tr>
             <tr>
+              <td>Google AdMob</td>
+              <td>
+                Optional rewarded ads for learners who do not have Premium. Watching is a choice,
+                and it can add one seed, up to a small daily limit. Google may receive an
+                advertising ID, device information, IP address, and how the ad was used, under
+                Google’s advertising policy. Lesson progress and email are not sent for this.
+                Premium learners are not shown these ads, and the app does not place banners or
+                ads between exercises.
+              </td>
+              <td>
+                <a
+                  href="https://policies.google.com/technologies/ads"
+                  rel="noopener noreferrer"
+                  >Google advertising policies</a
+                >
+              </td>
+            </tr>
+            <tr>
               <td>Cloudflare (content hosting)</td>
-              <td>Download of language packs (lessons and audio) over HTTPS</td>
+              <td>
+                Download of the course catalog and language packs (lessons and audio) over HTTPS.
+                The request does not include your account, email, or lesson answers.
+              </td>
               <td>
                 <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener noreferrer"
                   >Cloudflare Privacy Policy</a
@@ -191,64 +294,72 @@
           </tbody>
         </table>
         <p>
-          RevenueCat’s dashboard shows Super status (active, expired, cancelled, refunded) so we
-          can support paying users. That is purchase data, not advertising tracking.
+          RevenueCat’s dashboard shows Premium status (active, expired, cancelled, refunded) and
+          seed-pack purchases so we can support paying users. That is purchase data, not
+          advertising tracking.
         </p>
         <h3>Technical detail</h3>
         <p>
-          We do not currently include advertising, crash-reporting, or general product analytics
-          SDKs. We do not turn on advertising identifiers (used by some apps for ads) for GubbiGo.
+          We do not include crash-reporting or general product analytics SDKs. The advertising
+          identifier is used only when a learner without Premium chooses the rewarded ad.
         </p>
       </section>
 
       <section id="subscriptions">
-        <h2>5. Subscriptions and payments</h2>
+        <h2>6. Premium, seeds, and payments</h2>
         <p>
-          Some lessons are free. Later lessons may require an active <strong>Super</strong>
-          subscription. Monthly and yearly options both unlock the same Super access; they differ
-          only in price and billing period.
+          Lessons spend seeds. Seeds refill over time, up to a small balance kept on the device.
+          You can buy a seed pack for more seeds, watch an optional rewarded ad for one seed, or
+          subscribe to <strong>Premium</strong> for unlimited seeds and no ads. Premium is
+          optional. Lessons already on the device keep working without it, subject to the seed
+          balance.
         </p>
         <p>
-          If you subscribe, Google Play on Android or Apple on iOS
-          <strong>charges, renews, retries failed payments, and refunds</strong>. We do not
-          collect, store, or see your payment card number, UPI ID, or store-account password. We
-          never take card numbers in the app.
+          Google Play on Android, or Apple on an App Store build,
+          <strong>charges, renews Premium, retries failed payments, and refunds</strong>. Seed
+          packs are one-time purchases through the same store. We do not collect, store, or see
+          your payment card number, UPI ID, or store-account password.
         </p>
-        <h3>What leaves the device for Super</h3>
+        <h3>What leaves the device for a purchase</h3>
         <ul>
-          <li>the store purchase / receipt (handled by Google or Apple);</li>
+          <li>the store purchase or receipt, handled by Google or Apple;</li>
           <li>
-            that receipt plus an anonymous RevenueCat ID, product ID, and Super status (so the app
-            can trust that Super is active);
+            that receipt, the Firebase account id, the product id, and whether Premium is active,
+            so RevenueCat can tell the app the purchase is valid;
           </li>
           <li>
-            a local Super status cached in GubbiGo after a successful check, used while you are
-            offline.
+            a local Premium status cached in GubbiGo after a successful check, used while you are
+            offline;
+          </li>
+          <li>
+            for a seed pack, the Play order id stored only on this device. It is not uploaded with
+            lesson progress.
           </li>
         </ul>
         <p>
-          We do <em>not</em> send your lesson scores, streak, or which map node you finished to
-          Google, Apple, or RevenueCat. Whether later lessons stay locked is decided in the app
-          from local progress plus Super status.
+          We do <em>not</em> send your lesson scores, streak, or which lesson you finished to
+          Google, Apple, or RevenueCat.
         </p>
         <h3>Renewal, cancel, restore</h3>
         <ul>
           <li>
-            Super auto-renews until you cancel in Google Play (or the App Store on iOS). Price,
-            period, and auto-renewal are shown before you pay in the app and again by the store.
+            Premium renews until you cancel in Google Play (or the App Store, on an iOS build).
+            Price, period, and renewal are shown before you pay.
           </li>
           <li>
-            If you cancel, Super stays active until the end of the paid period, then later lessons
-            lock again. Free lessons keep working.
+            If you cancel, Premium stays active until the end of the paid period. After that, seeds
+            are limited again. Lessons already downloaded keep working.
           </li>
           <li>
-            Restore purchases uses the Google or Apple account on the device. You do not need a
-            GubbiGo login. A new phone looks unpaid until you restore (or subscribe again) with
-            that same store account.
+            Signing in with the same Google account on another device brings back the saved
+            progress and checks Premium for that Firebase account. Restore purchases on the Premium
+            screen checks the store account on the device. The purchase record stays with the
+            Google or Apple account that paid.
           </li>
           <li>
-            A refund or chargeback turns Super off after the store notifies RevenueCat and the app
-            next checks Super (including on launch when online).
+            A refund or chargeback turns Premium off after the store notifies RevenueCat and the
+            app next checks (including on launch when online). A seed pack that was already added
+            is not removed from the local balance by this app.
           </li>
         </ul>
         <p>
@@ -269,29 +380,44 @@
       </section>
 
       <section id="ads">
-        <h2>6. Advertising</h2>
+        <h2>7. Advertising</h2>
         <p>
-          GubbiGo does not display third-party advertisements and does not use advertising
-          identifiers for ads. We do not sell your information.
+          Learners who do not have Premium can choose to watch a short rewarded advertisement
+          from Google AdMob. The reward is one seed. The offer is capped per day, and the count of
+          ads watched stays on the device. There is no banner, and no advertisement is inserted
+          between exercises. Skipping the ad leaves the lesson and the seed balance unchanged.
+        </p>
+        <p>
+          Premium includes no advertisements. While Premium is active, the app does not load an ad
+          or use the advertising identifier for this purpose.
+        </p>
+        <p>
+          We do not sell your information. We do not give AdMob your name, email, lesson scores,
+          or saved progress. You can limit ad personalization in your device settings
+          (Google Settings → Ads, or the equivalent control on the device). Resetting or deleting
+          the advertising ID is handled by the device, not inside GubbiGo.
         </p>
       </section>
 
       <section id="children">
-        <h2>7. Children</h2>
+        <h2>8. Children</h2>
         <p>
           GubbiGo is designed so children can learn with a parent or guardian nearby. The app does
-          not include chat, social features, public profiles, or an account sign-up.
+          not include chat, social features, or public profiles. It does not ask for a child’s
+          name.
         </p>
         <p>
-          We do not knowingly collect a child’s name, email, or other contact details. Lesson
-          progress stays on the device. A parent or guardian should complete Super purchases
-          (Play / App Store authentication and parental controls). Recurring subscriptions are
-          billed to the store account until cancelled there.
+          An install still creates a Firebase account id, and lesson progress can sync to it. That
+          progress does not include a name or email unless someone chooses
+          <strong>Save progress with Google</strong>. A parent or guardian should be the one to
+          sign in with Google and to buy Premium or seed packs. Recurring Premium is billed to the
+          store account until it is cancelled there.
         </p>
         <p>
-          RevenueCat still receives an anonymous install ID and purchase receipts when Super is
-          bought or restored. That is not a child’s name, but it is subscription data. We do not
-          use it to profile children for advertising.
+          RevenueCat receives the Firebase account id and purchase receipts when Premium or a seed
+          pack is bought or restored. We do not send a child’s name, email, or lesson progress to
+          AdMob. A parent should decide whether a child watches a rewarded ad. Premium turns those
+          ads off.
         </p>
         <p>
           If you believe we have received personal information from a child that we should not
@@ -303,17 +429,22 @@
       </section>
 
       <section id="permissions">
-        <h2>8. App permissions</h2>
+        <h2>9. App permissions</h2>
         <p>GubbiGo is built to use:</p>
         <ul>
           <li>
-            <strong>Internet</strong> — to download language packs, check for app updates, complete
-            store purchases, restore Super, and check Super with RevenueCat;
+            <strong>Internet</strong> — to download language packs, save and restore progress,
+            sign in with Google, check for app updates, complete store purchases, check Premium
+            with RevenueCat, and load an optional rewarded ad when Premium is not active;
           </li>
-          <li><strong>Audio playback</strong> — to play lesson and word audio;</li>
+          <li><strong>Audio playback</strong> — to play lesson and word audio. The app does not record audio;</li>
           <li>
-            <strong>Local storage</strong> — to keep progress, downloaded content, and the cached
-            Super status.
+            <strong>Advertising ID</strong> — only to request that optional rewarded ad. It is not
+            used while Premium is active;
+          </li>
+          <li>
+            <strong>Local storage</strong> — to keep progress, downloaded lessons and audio, the
+            cached Premium status, seed-pack order ids, and the day’s rewarded-ad count.
           </li>
         </ul>
         <p>
@@ -323,73 +454,92 @@
       </section>
 
       <section id="retention">
-        <h2>9. Retention and deletion</h2>
+        <h2>10. Retention and deletion</h2>
         <ul>
           <li>
-            <strong>On-device data:</strong> remains until you clear app storage or uninstall
-            GubbiGo. Uninstalling deletes local progress and the cached Super status. It does
-            <em>not</em> cancel a Super subscription.
+            <strong>On-device lessons:</strong> remain until you sign out, delete the account,
+            clear app storage, or uninstall. Signing out or deleting a Google-linked account
+            clears lesson progress on this device. The seed-pack order record stays, so those
+            Play orders are not granted again. Uninstalling removes that record too. None of these
+            steps cancel Premium.
           </li>
           <li>
-            <strong>Store subscriptions:</strong> retained by Google or Apple under their
-            policies. Cancel in the store to stop renewal.
+            <strong>Cloud progress:</strong> stays in Firebase until you delete the account in the
+            app, or we delete it after a
+            <a href="../delete-data/">Delete my data</a>
+            request we can match. Signing out leaves the Google account’s saved progress in place.
           </li>
           <li>
-            <strong>RevenueCat:</strong> keeps Super status and receipt metadata for that
-            anonymous (or restored) customer so Super can be checked and restored. If you ask us
-            to delete this, we will request deletion from RevenueCat where the product allows. The
-            store will still have its own purchase record.
+            <strong>Google email:</strong> stays on the Firebase account until that account is
+            deleted. It is not stored in the progress document.
           </li>
           <li>
-            <strong>Download and update logs:</strong> technical request logs, if any, are retained
-            by Expo or Cloudflare under their policies. We do not keep a GubbiGo user profile
-            (name, email, password) on our servers.
+            <strong>Store purchases:</strong> retained by Google or Apple under their policies.
+            Cancel Premium in the store to stop renewal.
+          </li>
+          <li>
+            <strong>RevenueCat:</strong> keeps Premium status and purchase metadata for the
+            Firebase account id. If you ask us to delete this, we will request deletion from
+            RevenueCat where the product allows. The store will still have its own purchase
+            record.
+          </li>
+          <li>
+            <strong>Rewarded-ad count:</strong> stays on the device and resets when lesson progress
+            on the device is cleared. It is not saved in Firebase. Google may keep its own ad
+            measurement records under its policy.
+          </li>
+          <li>
+            <strong>Download and update logs:</strong> Expo or Cloudflare may retain ordinary
+            request logs under their policies.
           </li>
         </ul>
       </section>
 
       <section id="rights">
-        <h2>10. Your choices and rights</h2>
+        <h2>11. Your choices and rights</h2>
         <p>You can:</p>
         <ul>
-          <li>use the free lessons without subscribing;</li>
+          <li>learn without Premium, using the seeds on the device, and skip the optional ad;</li>
+          <li>skip Google sign-in and keep the anonymous account;</li>
           <li>turn off network access; lessons already on the device still work offline;</li>
           <li>clear app data or uninstall to remove local progress;</li>
-          <li>restore Super on another device with the same Google or Apple account;</li>
-          <li>cancel auto-renewal or request a refund through Google Play or the App Store;</li>
+          <li>
+            delete a Google-linked account from the Premium screen, which removes that account and
+            its saved progress;
+          </li>
+          <li>cancel Premium or request a refund through Google Play or the App Store;</li>
           <li>
             use the
             <a href="../delete-data/">Delete my data</a>
             form (or email
             <a href="mailto:developer@xlang.in">developer@xlang.in</a>
             with the subject “Delete my data”) to ask what information we hold or to request
-            deletion of the account and Super records we can control. Steps for cancel and restore
-            are on
+            deletion of an account we can match, including an anonymous one. Cancel and restore
+            steps are on
             <a href="../support/">Support</a>.
           </li>
         </ul>
         <p>
           Depending on where you live (including under India’s Digital Personal Data Protection
           Act and, where applicable, GDPR), you may have rights to access, correct, or delete
-          personal data, or to withdraw consent. Lesson progress is deleted by clearing app
-          storage or uninstalling. Subscription and receipt data held only by Google, Apple, or
-          RevenueCat is handled under those providers’ tools and policies; we will help where we
+          personal data, or to withdraw consent. Purchase records held by Google, Apple, or
+          RevenueCat are handled under those providers’ tools and policies; we will help where we
           can.
         </p>
       </section>
 
       <section id="changes">
-        <h2>11. Changes to this policy</h2>
+        <h2>12. Changes to this policy</h2>
         <p>
-          We will update this page if we add GubbiGo accounts, advertisements, a payment method
-          other than the official stores, extra analytics, or server-gated downloads. The “Last
-          updated” date at the top will change. Material changes will also be reflected in the
-          store listing where required.
+          We will update this page if we add banners or other ad placements, a payment method other
+          than the official stores, analytics, or a new category of data. The “Last updated” date at the
+          top will change. Material changes will also be reflected in the store listing where
+          required.
         </p>
       </section>
 
       <section id="contact">
-        <h2>12. Contact</h2>
+        <h2>13. Contact</h2>
         <p>
           For privacy questions, parent requests, or to ask us to delete information we control,
           use the
@@ -418,7 +568,7 @@
             <img src="../logo.svg" width="36" height="36" alt="" />
             <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
           </a>
-          <p>Indian language lessons that stay on your device.</p>
+          <p>Indian language lessons. Progress stays on your device and can sync to your account.</p>
         </div>
         <nav class="footer-links" aria-label="Footer">
           <a href="../privacy/">Privacy</a>
