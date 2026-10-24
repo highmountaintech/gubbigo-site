@@ -71,10 +71,12 @@
         </p>
         <p>
           The app works offline. On each install it creates a Firebase account id so progress can
-          be saved. You do not have to sign in. If you choose <strong>Save progress with Google</strong>,
-          Google sends that account’s email to Firebase Authentication. We do not operate our own
-          payment servers. Google Play bills Premium and seed packs. On an App Store build, Apple
-          bills those purchases. RevenueCat tells the app whether Premium is active.
+          be saved. You do not have to sign in. If you choose
+          <strong>Save progress with Google</strong>, Google sends that account’s name and email to
+          Firebase Authentication. The app shows the email. The name and email are not copied into
+          the lesson-progress document. We do not operate our own payment servers. Google Play bills
+          Premium and seed packs. On an App Store build, Apple bills those purchases. RevenueCat
+          tells the app whether Premium is active.
         </p>
       </section>
 
@@ -82,9 +84,10 @@
         <h2>2. Summary</h2>
         <div class="note">
           Lesson progress stays on your device and, when you are online, syncs to your Firebase
-          account. We do not collect your name, payment card, or UPI ID. We collect a Google email
-          only if you save progress with Google. Lessons use seeds. Seeds refill over time, seed
-          packs add more, and Premium is an optional subscription for unlimited seeds and no ads.
+          account. We do not collect a payment card or UPI ID. If you save progress with Google,
+          Firebase Authentication stores that Google account’s name and email. Lessons use seeds.
+          Seeds refill over time, seed packs add more, and Premium is an optional subscription for
+          unlimited seeds and no ads.
           Without Premium, the app can offer an optional rewarded ad in exchange for one seed.
           The app downloads language packs when you need them and may check Expo for an app update.
         </div>
@@ -150,9 +153,10 @@
         </p>
         <p>
           <strong>Save progress with Google</strong> is optional. If you use it, Google Sign-In
-          gives Firebase the email address of that Google account. The app shows the email on the
-          Premium screen. You do not type a password into GubbiGo. If that Google account already
-          has progress, the app asks before merging this device’s lessons into it.
+          gives Firebase the name and email of that Google account. The app shows the email on the
+          Premium screen. The name and email stay on the Firebase account. They are not copied into
+          the progress document. You do not type a password into GubbiGo. If that Google account
+          already has progress, the app asks before merging this device’s lessons into it.
         </p>
         <p>
           Signing out clears lesson progress on this device and leaves the Google account’s saved
@@ -183,8 +187,8 @@
             <tr>
               <td>Firebase Authentication</td>
               <td>
-                Creates the account id. If you save progress with Google, stores that Google email
-                on the account. The email is not copied into the progress document.
+                Creates the account id. If you save progress with Google, stores that Google account’s
+                name and email on the account. Neither is copied into the progress document.
               </td>
               <td>
                 <a href="https://firebase.google.com/support/privacy" rel="noopener noreferrer"
@@ -205,8 +209,8 @@
               <td>Google Sign-In</td>
               <td>
                 Optional. Used only when you save progress with Google or confirm account deletion.
-                Provides the Google email and a sign-in token. We do not receive your Google
-                password.
+                Provides the Google account name, email, and a sign-in token. We do not receive
+                your Google password. The name and email are not copied into the progress document.
               </td>
               <td>
                 <a href="https://policies.google.com/privacy" rel="noopener noreferrer"
@@ -264,12 +268,14 @@
             <tr>
               <td>Google AdMob</td>
               <td>
-                Optional rewarded ads for learners who do not have Premium. Watching is a choice,
-                and it can add one seed, up to a small daily limit. Google may receive an
-                advertising ID, device information, IP address, and how the ad was used, under
-                Google’s advertising policy. Lesson progress and email are not sent for this.
-                Premium learners are not shown these ads, and the app does not place banners or
-                ads between exercises.
+                Optional rewarded ads while Premium is not active. The app may load Google AdMob and
+                use the advertising ID before a learner chooses an ad. An ad plays only if they
+                choose to watch, and it can add one seed, up to a small daily limit. Google may
+                also receive device information, an IP address, and how the ad was used. Lesson
+                progress, name, and email are not sent for this. Premium learners are not shown
+                these ads, and the app does not place banners or ads between exercises. These
+                requests are not marked as child-directed, because the store listing is for a
+                general audience.
               </td>
               <td>
                 <a
@@ -300,8 +306,9 @@
         </p>
         <h3>Technical detail</h3>
         <p>
-          We do not include crash-reporting or general product analytics SDKs. The advertising
-          identifier is used only when a learner without Premium chooses the rewarded ad.
+          We do not include crash-reporting or general product analytics SDKs. While Premium is
+          not active, the advertising identifier may be used to offer a rewarded ad. An ad plays
+          only if the learner chooses to watch.
         </p>
       </section>
 
@@ -382,10 +389,14 @@
       <section id="ads">
         <h2>7. Advertising</h2>
         <p>
-          Learners who do not have Premium can choose to watch a short rewarded advertisement
-          from Google AdMob. The reward is one seed. The offer is capped per day, and the count of
-          ads watched stays on the device. There is no banner, and no advertisement is inserted
-          between exercises. Skipping the ad leaves the lesson and the seed balance unchanged.
+          The Play listing is for a general audience. It is not a child-directed app, and rewarded
+          ads are not requested with child-directed treatment. Learners who do not have Premium can
+          choose to watch a short rewarded advertisement from Google AdMob. While Premium is not
+          active, the app may load AdMob and use the advertising ID before that choice. An ad plays
+          only if the learner chooses to watch. The reward is one seed. The offer is capped per
+          day, and the count of ads watched stays on the device. There is no banner, and no
+          advertisement is inserted between exercises. Skipping the ad leaves the lesson and the
+          seed balance unchanged.
         </p>
         <p>
           Premium includes no advertisements. While Premium is active, the app does not load an ad
@@ -393,31 +404,33 @@
         </p>
         <p>
           We do not sell your information. We do not give AdMob your name, email, lesson scores,
-          or saved progress. You can limit ad personalization in your device settings
-          (Google Settings → Ads, or the equivalent control on the device). Resetting or deleting
-          the advertising ID is handled by the device, not inside GubbiGo.
+          or saved progress. Because these ads are not child-directed, you can limit ad
+          personalization in your device settings (Google Settings → Ads, or the equivalent control
+          on the device). Resetting or deleting the advertising ID is handled by the device, not
+          inside GubbiGo.
         </p>
       </section>
 
       <section id="children">
         <h2>8. Children</h2>
         <p>
-          GubbiGo is designed so children can learn with a parent or guardian nearby. The app does
-          not include chat, social features, or public profiles. It does not ask for a child’s
-          name.
+          The Play listing is for a general audience, not a child-directed service. A child may
+          still learn with a parent or guardian nearby. The app does not include chat, social
+          features, or public profiles, and it does not ask anyone to type a name.
         </p>
         <p>
-          An install still creates a Firebase account id, and lesson progress can sync to it. That
-          progress does not include a name or email unless someone chooses
-          <strong>Save progress with Google</strong>. A parent or guardian should be the one to
-          sign in with Google and to buy Premium or seed packs. Recurring Premium is billed to the
-          store account until it is cancelled there.
+          An install still creates a Firebase account id, and lesson progress can sync to it. The
+          progress document does not include a name or email. If someone chooses
+          <strong>Save progress with Google</strong>, that Google account’s name and email are
+          stored on the Firebase account. A parent or guardian should be the one to sign in with
+          Google and to buy Premium or seed packs. Recurring Premium is billed to the store account
+          until it is cancelled there.
         </p>
         <p>
           RevenueCat receives the Firebase account id and purchase receipts when Premium or a seed
-          pack is bought or restored. We do not send a child’s name, email, or lesson progress to
-          AdMob. A parent should decide whether a child watches a rewarded ad. Premium turns those
-          ads off.
+          pack is bought or restored. We do not send a name, email, or lesson progress to AdMob.
+          Rewarded-ad requests are not marked as child-directed. A parent should decide whether a
+          child watches one. Premium turns those ads off.
         </p>
         <p>
           If you believe we have received personal information from a child that we should not
@@ -439,7 +452,8 @@
           </li>
           <li><strong>Audio playback</strong> — to play lesson and word audio. The app does not record audio;</li>
           <li>
-            <strong>Advertising ID</strong> — only to request that optional rewarded ad. It is not
+            <strong>Advertising ID</strong> — may be used while Premium is not active, to offer the
+            optional rewarded ad. An ad plays only if the learner chooses it. The identifier is not
             used while Premium is active;
           </li>
           <li>
@@ -470,8 +484,8 @@
             request we can match. Signing out leaves the Google account’s saved progress in place.
           </li>
           <li>
-            <strong>Google email:</strong> stays on the Firebase account until that account is
-            deleted. It is not stored in the progress document.
+            <strong>Google name and email:</strong> stay on the Firebase account until that account
+            is deleted. They are not stored in the progress document.
           </li>
           <li>
             <strong>Store purchases:</strong> retained by Google or Apple under their policies.
