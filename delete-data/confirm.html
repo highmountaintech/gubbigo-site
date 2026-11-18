@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173B63" />
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="Confirm deletion of your GubbiGo account and the data we control."
+    />
+    <title>Confirm deletion — GubbiGo</title>
+    <link rel="icon" href="../favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="GubbiGo home">
+          <img src="../logo.svg" width="36" height="36" alt="" />
+          <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site">
+          <a href="../">Home</a>
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./" aria-current="page">Delete data</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-header">
+        <p class="eyebrow">Privacy</p>
+        <h1>Confirm account deletion</h1>
+        <p class="lede" id="confirm-lede">
+          This confirms the deletion request you just received by email. Deletion only happens
+          after you click the button below.
+        </p>
+      </div>
+
+      <article class="doc">
+        <div class="note" id="confirm-note">
+          This cannot be undone. Your GubbiGo sign-in, cloud lesson progress, and the Super
+          customer record we control will be deleted.
+        </div>
+
+        <div class="form-actions" id="confirm-actions">
+          <button class="btn" id="confirm-submit" type="button">
+            Yes, delete my account and data
+          </button>
+        </div>
+
+        <p id="confirm-status" class="form-status" role="status" aria-live="polite"></p>
+
+        <p class="doc-note">
+          Changed your mind? Just close this page — nothing is deleted unless you click the
+          button above. See also <a href="../privacy/">Privacy</a> and
+          <a href="../support/">Support</a>.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="../" aria-label="GubbiGo home">
+            <img src="../logo.svg" width="36" height="36" alt="" />
+            <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+          </a>
+          <p>Indian language lessons that stay on your device.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./">Delete data</a>
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+        </nav>
+        <p class="copyright">© 2026 GubbiGo</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get("id") || "";
+        var token = params.get("token") || "";
+        var finalizeUrl = params.get("finalize") || "";
+
+        var ledeEl = document.getElementById("confirm-lede");
+        var noteEl = document.getElementById("confirm-note");
+        var actionsEl = document.getElementById("confirm-actions");
+        var statusEl = document.getElementById("confirm-status");
+        var submitBtn = document.getElementById("confirm-submit");
+
+        function setStatus(message, kind) {
+          statusEl.textContent = message;
+          statusEl.className = "form-status" + (kind ? " form-status-" + kind : "");
+        }
+
+        function showBrokenLink() {
+          ledeEl.textContent = "This confirmation link is incomplete or invalid.";
+          noteEl.textContent =
+            "Open the link from your email again, or request deletion again from the form on this site.";
+          actionsEl.style.display = "none";
+        }
+
+        // finalizeUrl is attacker-visible/editable (it's a query param) by design -
+        // confirmDeletion builds the same URL from server config, and this page is
+        // meant to work for both the dev and prod backends without a separate
+        // build per environment. Still, only ever fetch() an https URL from it.
+        if (!id || !token || !finalizeUrl || finalizeUrl.indexOf("https://") !== 0) {
+          showBrokenLink();
+          return;
+        }
+
+        submitBtn.addEventListener("click", function () {
+          submitBtn.disabled = true;
+          setStatus("Deleting…");
+
+          fetch(finalizeUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: id, token: token }),
+          })
+            .then(function (response) {
+              return response.json().then(function (body) {
+                return { status: response.status, body: body };
+              });
+            })
+            .then(function (result) {
+              if (result.status === 409) {
+                setStatus(
+                  "Already being processed from another tab or a retry. Wait a minute, then reload this page and try again if it does not finish.",
+                  "warn"
+                );
+                submitBtn.disabled = false;
+                return;
+              }
+              if (result.status === 500 && result.body && result.body.error === "try_again") {
+                setStatus("Something went wrong on our end. Please try again.", "warn");
+                submitBtn.disabled = false;
+                return;
+              }
+              var outcome = (result.body && result.body.outcome) || "invalid";
+              window.location.href = "./done.html?result=" + encodeURIComponent(outcome);
+            })
+            .catch(function () {
+              setStatus("Network error. Check your connection and try again.", "warn");
+              submitBtn.disabled = false;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>

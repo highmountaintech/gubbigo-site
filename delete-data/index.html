@@ -96,6 +96,13 @@
         </p>
         <p>Do not send payment card details or Google / Apple passwords.</p>
 
+        <!--
+          action/method point at FormSubmit on purpose: if the module script
+          below fails to load/execute (ad blocker, strict CSP, CDN outage),
+          event.preventDefault() never runs and the browser falls back to this
+          native form POST, so a request still reaches developer@xlang.in
+          instead of a silent dead end. The JS path below is what runs normally.
+        -->
         <form
           id="delete-request-form"
           class="request-form"
@@ -239,7 +246,28 @@
       </div>
     </footer>
 
-    <script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+      // Public web client config (not secret - the security boundary is
+      // Firestore rules + the API key's HTTP-referrer restriction in Google
+      // Cloud, same as any Firebase web app). Project: gubbigo-firebase.
+      const firebaseConfig = {
+        projectId: "gubbigo-firebase",
+        appId: "1:74116470837:web:e7e3f31983df27d0fef97c",
+        storageBucket: "gubbigo-firebase.firebasestorage.app",
+        apiKey: "AIzaSyALeVzs70xbz40DAvDquG9F8C0pdwMw4rU",
+        authDomain: "gubbigo-firebase.firebaseapp.com",
+        messagingSenderId: "74116470837",
+      };
+
+      const db = getFirestore(initializeApp(firebaseConfig));
+
       (function () {
         var form = document.getElementById("delete-request-form");
         var statusEl = document.getElementById("form-status");
@@ -263,6 +291,18 @@
           ].join("\n");
         }
 
+        // deletionRequests only allows an "email" field and an optional "note"
+        // field (<=1000 chars) - see firestore.rules deletionRequestIsValid().
+        function buildNote(data) {
+          var note = [
+            "Google account: " + (data.google_email || "(not provided)"),
+            "Platform: " + data.platform,
+            "Saved with Google: " + data.saved_with_google,
+            "Notes: " + (data.details || "(none)"),
+          ].join("\n");
+          return note.slice(0, 1000);
+        }
+
         form.addEventListener("submit", function (event) {
           event.preventDefault();
 
@@ -273,35 +313,24 @@
           }
 
           var data = {
-            _subject: "Delete my data",
             email: form.email.value.trim(),
             google_email: form.google_email.value.trim(),
             platform: form.platform.value,
             saved_with_google: form.saved_with_google.value,
             details: form.details.value.trim(),
-            confirm_delete: form.confirm_delete.checked ? "yes" : "no",
-            confirm_subscription: form.confirm_subscription.checked ? "yes" : "no",
           };
 
           submitBtn.disabled = true;
           setStatus("Sending your request…");
 
-          fetch("https://formsubmit.co/ajax/developer@xlang.in", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(data),
+          addDoc(collection(db, "deletionRequests"), {
+            email: data.email,
+            note: buildNote(data),
           })
-            .then(function (response) {
-              if (!response.ok) throw new Error("Request failed");
-              return response.json();
-            })
             .then(function () {
               form.reset();
               setStatus(
-                "Request sent. Check your inbox (including spam) for a confirmation, then wait for our reply. We aim to finish within 30 days.",
+                "Request received. Check your inbox (including spam) for a confirmation link - click it within 24 hours to confirm. We'll email you once it's done.",
                 "ok"
               );
             })

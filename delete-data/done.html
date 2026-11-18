@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173B63" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Result of your GubbiGo account deletion request." />
+    <title>Deletion result — GubbiGo</title>
+    <link rel="icon" href="../favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="GubbiGo home">
+          <img src="../logo.svg" width="36" height="36" alt="" />
+          <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site">
+          <a href="../">Home</a>
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./" aria-current="page">Delete data</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-header">
+        <p class="eyebrow">Privacy</p>
+        <h1 id="result-title">Request result</h1>
+        <p class="lede" id="result-lede"></p>
+      </div>
+
+      <article class="doc">
+        <div class="note" id="result-note"></div>
+        <p class="doc-note">
+          Questions? See <a href="../support/">Support</a> or email
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="../" aria-label="GubbiGo home">
+            <img src="../logo.svg" width="36" height="36" alt="" />
+            <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+          </a>
+          <p>Indian language lessons that stay on your device.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./">Delete data</a>
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+        </nav>
+        <p class="copyright">© 2026 GubbiGo</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var COPY = {
+          done: {
+            title: "Your account has been deleted",
+            lede: "Your GubbiGo account and the data we control for it have been deleted.",
+            note:
+              "Uninstalling the app (if you haven't already) removes anything still stored on that device. Super billing, if any, is cancelled separately in Google Play or the App Store.",
+          },
+          not_found: {
+            title: "No matching account found",
+            lede: "We could not find a GubbiGo account using that email.",
+            note:
+              "If you never saved progress with Google, there is likely nothing on our servers tied to it - on-device data is already gone once you uninstall.",
+          },
+          expired: {
+            title: "This confirmation link expired",
+            lede: "Confirmation links are only valid for 24 hours.",
+            note: 'Go back to the <a href="./">delete-data form</a> and submit a new request - it will send a fresh link.',
+          },
+          invalid: {
+            title: "This link is invalid",
+            lede: "We couldn't match this link to a pending request.",
+            note:
+              'It may have already been used, or copied incorrectly. Go back to the <a href="./">delete-data form</a> and submit a new request if you still want your account deleted.',
+          },
+        };
+
+        var params = new URLSearchParams(window.location.search);
+        var result = params.get("result") || "invalid";
+        var copy = COPY[result] || COPY.invalid;
+
+        document.getElementById("result-title").textContent = copy.title;
+        document.getElementById("result-lede").textContent = copy.lede;
+        document.getElementById("result-note").innerHTML = copy.note;
+      })();
+    </script>
+  </body>
+</html>
