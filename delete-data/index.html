@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#173B63" />
     <meta
       name="description"
-      content="Request deletion of your GubbiGo account and the data we control. Uninstalling the app removes on-device progress. Super is cancelled in Google Play or the App Store."
+      content="Request deletion of your GubbiGo account and the data we control. Uninstalling the app removes on-device progress."
     />
     <title>Delete my data — GubbiGo</title>
     <link rel="icon" href="../favicon.png" type="image/png" />
@@ -48,23 +48,18 @@
 
       <article class="doc">
         <div class="note">
-          Uninstalling GubbiGo (or clearing app storage) deletes lessons, scores, and cached Super
-          status on that phone. It does <em>not</em> cancel Super. Cancel Super in
-          <a href="https://play.google.com/store/account/subscriptions" rel="noopener noreferrer"
-            >Google Play</a
-          >
-          or Settings → Apple ID → Subscriptions.
+          Uninstalling GubbiGo (or clearing app storage) deletes lessons, scores, and progress
+          cached on that phone. On-device data is only removable by you, this way.
         </div>
 
         <h2>What we delete when you submit this form</h2>
-        <p>If we can match your request to an account, we delete:</p>
+        <p>
+          We email a confirmation link to the address you give below. Click it, confirm on the
+          page it opens, and if we can match the account we delete:
+        </p>
         <ul>
-          <li>your GubbiGo sign-in (anonymous Firebase user, or Google-linked account);</li>
-          <li>cloud lesson progress stored for that user;</li>
-          <li>
-            the Super / RevenueCat customer record we can control for that user (the store still
-            keeps its own purchase history).
-          </li>
+          <li>your GubbiGo sign-in (the Google-linked account tied to that email);</li>
+          <li>cloud lesson progress stored for that account.</li>
         </ul>
 
         <h2>What we cannot delete from this form</h2>
@@ -74,27 +69,24 @@
             app storage.
           </li>
           <li>
-            <strong>Super billing</strong> — Google or Apple keep the purchase record. Cancel
-            auto-renewal in the store so Super does not renew.
-          </li>
-          <li>
             <strong>Technical logs</strong> — Expo or Cloudflare may retain ordinary request logs
             under their own policies. See the
             <a href="../privacy/">Privacy Policy</a>.
           </li>
         </ul>
         <p>
-          If we cannot find a matching account, we will still email you (at the address you give
-          below) and tell you what we checked.
+          If we cannot match the address to an account, we send nothing, so no email will arrive.
+          Check your spam folder first, and make sure you used the Google account email.
         </p>
 
         <h2>How to identify your account</h2>
         <p>
-          If you tapped <strong>Save progress with Google</strong>, use that Google account email.
-          If you never saved with Google, on-device data is already gone after uninstall; we may
-          have little or nothing on our servers unless Super was bought on that install.
+          Use the Google account email you tapped <strong>Save progress with Google</strong>
+          with. If you never saved with Google, your progress is stored under an anonymous
+          account that has no email, so we cannot look it up here. It is deleted automatically
+          after 90 days without opening the app, and on-device data is gone once you uninstall.
         </p>
-        <p>Do not send payment card details or Google / Apple passwords.</p>
+        <p>Do not send passwords.</p>
 
         <!--
           action/method point at FormSubmit on purpose: if the module script
@@ -178,7 +170,7 @@
               name="details"
               rows="4"
               maxlength="2000"
-              placeholder="For example: Super order ID, approximate sign-up date, or the learning language."
+              placeholder="For example: the approximate sign-up date or the learning language."
             ></textarea>
           </div>
 
@@ -187,20 +179,6 @@
             <span>
               I want GubbiGo to delete my account and the associated data you control, as described
               on this page.
-            </span>
-          </label>
-
-          <label class="form-check">
-            <input
-              id="confirm_subscription"
-              name="confirm_subscription"
-              type="checkbox"
-              value="yes"
-              required
-            />
-            <span>
-              I understand that Super is cancelled only in Google Play or the App Store, not by
-              this form.
             </span>
           </label>
 
@@ -266,7 +244,57 @@
         messagingSenderId: "74116470837",
       };
 
-      const db = getFirestore(initializeApp(firebaseConfig));
+      const app = initializeApp(firebaseConfig);
+
+      // App Check proves the request comes from this page and not a script posting straight
+      // to Firestore. reCAPTCHA Enterprise site key (public); leave empty to keep it off.
+      // Register the key under Firebase console -> App Check -> this web app first.
+      const APP_CHECK_SITE_KEY = "";
+      const APP_CHECK_WAIT_MS = 5000;
+
+      // Loaded in the background and NEVER awaited at the top of this module: a slow or
+      // blocked script must not stop the form from being wired up. The submit handler waits
+      // for it (briefly) just before the write, and any failure is swallowed, so a blocked
+      // script or a missing key cannot take the form down: an unattested write is simply
+      // refused by Firestore once enforcement is on, and the mail fallback takes over.
+      let appCheckReady = Promise.resolve();
+      if (APP_CHECK_SITE_KEY) {
+        appCheckReady = (async function () {
+          try {
+            if (location.hostname === "localhost") {
+              // Logs a debug token in the console; register it under App Check -> Manage debug tokens.
+              self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+            }
+            const appCheck = await import(
+              "https://www.gstatic.com/firebasejs/11.6.0/firebase-app-check.js"
+            );
+            appCheck.initializeAppCheck(app, {
+              provider: new appCheck.ReCaptchaEnterpriseProvider(APP_CHECK_SITE_KEY),
+              isTokenAutoRefreshEnabled: true,
+            });
+          } catch (error) {
+            console.warn("App Check could not start.");
+          }
+        })();
+      }
+
+      // Firestore is created only after App Check had its chance to start, and only once.
+      let db = null;
+      function getDb() {
+        if (!db) {
+          db = getFirestore(app);
+        }
+        return db;
+      }
+
+      function appCheckSettled() {
+        return Promise.race([
+          appCheckReady,
+          new Promise(function (resolve) {
+            setTimeout(resolve, APP_CHECK_WAIT_MS);
+          }),
+        ]);
+      }
 
       (function () {
         var form = document.getElementById("delete-request-form");
@@ -323,10 +351,13 @@
           submitBtn.disabled = true;
           setStatus("Sending your request…");
 
-          addDoc(collection(db, "deletionRequests"), {
-            email: data.email,
-            note: buildNote(data),
-          })
+          appCheckSettled()
+            .then(function () {
+              return addDoc(collection(getDb(), "deletionRequests"), {
+                email: data.email,
+                note: buildNote(data),
+              });
+            })
             .then(function () {
               form.reset();
               setStatus(
