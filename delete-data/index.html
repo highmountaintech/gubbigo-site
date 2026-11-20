@@ -75,8 +75,8 @@
           </li>
         </ul>
         <p>
-          If we cannot find a matching account, the confirmation page will tell you so — there is
-          likely nothing on our servers tied to that email.
+          If we cannot match the address to an account, we send nothing, so no email will arrive.
+          Check your spam folder first, and make sure you used the Google account email.
         </p>
 
         <h2>How to identify your account</h2>
@@ -88,7 +88,23 @@
         </p>
         <p>Do not send passwords.</p>
 
-        <form id="delete-request-form" class="request-form">
+        <!--
+          action/method point at FormSubmit on purpose: if the module script
+          below fails to load/execute (ad blocker, strict CSP, CDN outage),
+          event.preventDefault() never runs and the browser falls back to this
+          native form POST, so a request still reaches developer@xlang.in
+          instead of a silent dead end. The JS path below is what runs normally.
+        -->
+        <form
+          id="delete-request-form"
+          class="request-form"
+          action="https://formsubmit.co/developer@xlang.in"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="Delete my data" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_honey" value="" />
           <div class="hp" aria-hidden="true">
             <label>
               Company
@@ -97,7 +113,7 @@
           </div>
 
           <div class="form-field">
-            <label for="email">Email tied to your GubbiGo account</label>
+            <label for="email">Email we should reply to</label>
             <input
               id="email"
               name="email"
@@ -107,20 +123,54 @@
               inputmode="email"
               placeholder="you@example.com"
             />
+            <p class="form-hint">We use this to confirm the request and tell you when it is done.</p>
+          </div>
+
+          <div class="form-field">
+            <label for="google_email">Google account used in GubbiGo (if any)</label>
+            <input
+              id="google_email"
+              name="google_email"
+              type="email"
+              autocomplete="off"
+              inputmode="email"
+              placeholder="Same as above, or leave blank"
+            />
             <p class="form-hint">
-              The Google account you used with <strong>Save progress with Google</strong>, if any.
-              We send the confirmation link here.
+              Fill this if you saved progress with Google and that address is different from the
+              reply email.
             </p>
           </div>
 
           <div class="form-field">
-            <label for="note">Anything else that helps us find the account (optional)</label>
+            <label for="platform">Where you installed GubbiGo</label>
+            <select id="platform" name="platform" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="android">Android (Google Play)</option>
+              <option value="ios">iOS (App Store)</option>
+              <option value="both">Both</option>
+              <option value="unsure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="saved_with_google">Did you save progress with Google?</label>
+            <select id="saved_with_google" name="saved_with_google" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="unsure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="details">Anything else that helps us find the account (optional)</label>
             <textarea
-              id="note"
-              name="note"
+              id="details"
+              name="details"
               rows="4"
-              maxlength="1000"
-              placeholder="For example: approximate sign-up date, or the learning language."
+              maxlength="2000"
+              placeholder="For example: the approximate sign-up date or the learning language."
             ></textarea>
           </div>
 
@@ -143,12 +193,6 @@
 
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
-
-        <div class="note form-status-ok" id="confirm-panel" hidden>
-          Check your email. We sent a confirmation link to the address you entered. Click it
-          within 24 hours to finish deleting your account. If you don't see it in a minute, check
-          spam.
-        </div>
 
         <p class="doc-note">
           Requests go to
@@ -181,38 +225,51 @@
     </footer>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
       import {
         getFirestore,
-        connectFirestoreEmulator,
         collection,
         addDoc,
-      } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-      import { firebaseConfig, appCheckConfig } from "../firebase-config.js";
+      } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-      var app = initializeApp(firebaseConfig);
+      // Public web client config (not secret - the security boundary is
+      // Firestore rules + the API key's HTTP-referrer restriction in Google
+      // Cloud, same as any Firebase web app). Project: gubbigo-firebase.
+      const firebaseConfig = {
+        projectId: "gubbigo-firebase",
+        appId: "1:74116470837:web:e7e3f31983df27d0fef97c",
+        storageBucket: "gubbigo-firebase.firebasestorage.app",
+        apiKey: "AIzaSyALeVzs70xbz40DAvDquG9F8C0pdwMw4rU",
+        authDomain: "gubbigo-firebase.firebaseapp.com",
+        messagingSenderId: "74116470837",
+      };
 
-      // App Check proves the request comes from this page and not a script posting
-      // straight to Firestore. It is loaded in the background and NEVER awaited at the
-      // top of this module: a slow or blocked script must not stop the form below from
-      // being wired up. The submit handler waits for it (briefly) just before the write,
-      // and any failure is swallowed, so a blocked script or a missing key cannot take the
-      // form down: an unattested write is simply refused by Firestore once enforcement is
-      // on, and the mail fallback below takes over.
-      var APP_CHECK_WAIT_MS = 5000;
-      var appCheckReady = Promise.resolve();
-      if (appCheckConfig && appCheckConfig.siteKey) {
+      const app = initializeApp(firebaseConfig);
+
+      // App Check proves the request comes from this page and not a script posting straight
+      // to Firestore. reCAPTCHA Enterprise site key (public); leave empty to keep it off.
+      // Register the key under Firebase console -> App Check -> this web app first.
+      const APP_CHECK_SITE_KEY = "";
+      const APP_CHECK_WAIT_MS = 5000;
+
+      // Loaded in the background and NEVER awaited at the top of this module: a slow or
+      // blocked script must not stop the form from being wired up. The submit handler waits
+      // for it (briefly) just before the write, and any failure is swallowed, so a blocked
+      // script or a missing key cannot take the form down: an unattested write is simply
+      // refused by Firestore once enforcement is on, and the mail fallback takes over.
+      let appCheckReady = Promise.resolve();
+      if (APP_CHECK_SITE_KEY) {
         appCheckReady = (async function () {
           try {
             if (location.hostname === "localhost") {
-              // Logs a debug token in the console; register it in Firebase console -> App Check.
+              // Logs a debug token in the console; register it under App Check -> Manage debug tokens.
               self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
             }
-            var appCheckModule = await import(
-              "https://www.gstatic.com/firebasejs/10.14.1/firebase-app-check.js"
+            const appCheck = await import(
+              "https://www.gstatic.com/firebasejs/11.6.0/firebase-app-check.js"
             );
-            appCheckModule.initializeAppCheck(app, {
-              provider: new appCheckModule.ReCaptchaEnterpriseProvider(appCheckConfig.siteKey),
+            appCheck.initializeAppCheck(app, {
+              provider: new appCheck.ReCaptchaEnterpriseProvider(APP_CHECK_SITE_KEY),
               isTokenAutoRefreshEnabled: true,
             });
           } catch (error) {
@@ -222,13 +279,10 @@
       }
 
       // Firestore is created only after App Check had its chance to start, and only once.
-      var db = null;
+      let db = null;
       function getDb() {
         if (!db) {
           db = getFirestore(app);
-          if (location.hostname === "localhost") {
-            connectFirestoreEmulator(db, "localhost", 8080);
-          }
         }
         return db;
       }
@@ -242,69 +296,92 @@
         ]);
       }
 
-      var form = document.getElementById("delete-request-form");
-      var statusEl = document.getElementById("form-status");
-      var submitBtn = document.getElementById("delete-submit");
-      var confirmPanel = document.getElementById("confirm-panel");
+      (function () {
+        var form = document.getElementById("delete-request-form");
+        var statusEl = document.getElementById("form-status");
+        var submitBtn = document.getElementById("delete-submit");
+        if (!form || !statusEl || !submitBtn) return;
 
-      function setStatus(message, kind) {
-        statusEl.textContent = message;
-        statusEl.className = "form-status" + (kind ? " form-status-" + kind : "");
-      }
-
-      function mailtoHref(email, note) {
-        var body = [
-          "Please delete my GubbiGo account and associated data.",
-          "",
-          "Email: " + email,
-          "Notes: " + (note || "(none)"),
-        ].join("\n");
-        return (
-          "mailto:developer@xlang.in?subject=" +
-          encodeURIComponent("Delete my data") +
-          "&body=" +
-          encodeURIComponent(body)
-        );
-      }
-
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        // Honeypot: bots that fill every field get a fake success, no write.
-        if (form.elements.company && form.elements.company.value) {
-          form.reset();
-          setStatus("Request sent.", "ok");
-          return;
+        function setStatus(message, kind) {
+          statusEl.textContent = message;
+          statusEl.className = "form-status" + (kind ? " form-status-" + kind : "");
         }
 
-        var email = form.email.value.trim().toLowerCase();
-        var note = form.note.value.trim();
+        function mailtoBody(data) {
+          return [
+            "Please delete my GubbiGo account and associated data.",
+            "",
+            "Reply email: " + data.email,
+            "Google account in GubbiGo: " + (data.google_email || "(not provided)"),
+            "Platform: " + data.platform,
+            "Saved with Google: " + data.saved_with_google,
+            "Notes: " + (data.details || "(none)"),
+          ].join("\n");
+        }
 
-        submitBtn.disabled = true;
-        setStatus("Sending your request…");
+        // deletionRequests only allows an "email" field and an optional "note"
+        // field (<=1000 chars) - see firestore.rules deletionRequestIsValid().
+        function buildNote(data) {
+          var note = [
+            "Google account: " + (data.google_email || "(not provided)"),
+            "Platform: " + data.platform,
+            "Saved with Google: " + data.saved_with_google,
+            "Notes: " + (data.details || "(none)"),
+          ].join("\n");
+          return note.slice(0, 1000);
+        }
 
-        var payload = note ? { email: email, note: note } : { email: email };
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
 
-        appCheckSettled()
-          .then(function () {
-            return addDoc(collection(getDb(), "deletionRequests"), payload);
-          })
-          .then(function () {
-            form.hidden = true;
-            confirmPanel.hidden = false;
-            setStatus("");
-          })
-          .catch(function () {
-            window.location.href = mailtoHref(email, note);
-            setStatus(
-              "Could not send your request automatically. If your mail app did not open, email developer@xlang.in with the same details.",
-              "warn"
-            );
-          })
-          .finally(function () {
-            submitBtn.disabled = false;
-          });
-      });
+          if (form.elements.company && form.elements.company.value) {
+            setStatus("Request sent. We will email you at the address you provided.", "ok");
+            form.reset();
+            return;
+          }
+
+          var data = {
+            email: form.email.value.trim(),
+            google_email: form.google_email.value.trim(),
+            platform: form.platform.value,
+            saved_with_google: form.saved_with_google.value,
+            details: form.details.value.trim(),
+          };
+
+          submitBtn.disabled = true;
+          setStatus("Sending your request…");
+
+          appCheckSettled()
+            .then(function () {
+              return addDoc(collection(getDb(), "deletionRequests"), {
+                email: data.email,
+                note: buildNote(data),
+              });
+            })
+            .then(function () {
+              form.reset();
+              setStatus(
+                "Request received. Check your inbox (including spam) for a confirmation link - click it within 24 hours to confirm. We'll email you once it's done.",
+                "ok"
+              );
+            })
+            .catch(function () {
+              var href =
+                "mailto:developer@xlang.in?subject=" +
+                encodeURIComponent("Delete my data") +
+                "&body=" +
+                encodeURIComponent(mailtoBody(data));
+              window.location.href = href;
+              setStatus(
+                "If your mail app did not open, email developer@xlang.in with the same details. Include the subject “Delete my data”.",
+                "warn"
+              );
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+            });
+        });
+      })();
     </script>
   </body>
 </html>

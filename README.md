@@ -10,7 +10,7 @@ After Pages is enabled (Settings → Pages → Source: GitHub Actions), the site
 
 Point a custom domain (for example `gubbigo.yourdomain.com`) at this Pages site and paste `https://gubbigo.yourdomain.com/privacy/` into the Google Play Console. Use `https://gubbigo.yourdomain.com/delete-data/` as the account deletion URL.
 
-The delete-data form emails `developer@xlang.in` via [FormSubmit](https://formsubmit.co/). The first live submission sends a confirmation link to that inbox; click it once so later requests arrive automatically. If FormSubmit is blocked, the page falls back to the user’s mail app.
+The delete-data form writes a request to Firestore (`deletionRequests`); a confirmation link is then emailed by the Cloud Functions and finished on `confirm.html`. If the page's script fails to load (ad blocker, outage), the form falls back to a native POST to [FormSubmit](https://formsubmit.co/), which emails `developer@xlang.in`; the first live fallback submission sends a confirmation link to that inbox, which you click once. reCAPTCHA Enterprise App Check for the form is off until `APP_CHECK_SITE_KEY` is set in `delete-data/index.html` (the key is public; register it under Firebase console, App Check, this web app first).
 
 ## Account deletion confirm page
 

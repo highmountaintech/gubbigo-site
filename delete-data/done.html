@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#173B63" />
     <meta name="robots" content="noindex" />
     <meta name="description" content="Result of your GubbiGo account deletion request." />
-    <title>Delete my data — GubbiGo</title>
+    <title>Deletion result — GubbiGo</title>
     <link rel="icon" href="../favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +28,7 @@
           <a href="../privacy/">Privacy</a>
           <a href="../terms/">Terms</a>
           <a href="../support/">Support</a>
-          <a href="./">Delete data</a>
+          <a href="./" aria-current="page">Delete data</a>
         </nav>
       </div>
     </header>
@@ -36,14 +36,15 @@
     <main class="page">
       <div class="page-header">
         <p class="eyebrow">Privacy</p>
-        <h1 id="done-title">Working…</h1>
+        <h1 id="result-title">Request result</h1>
+        <p class="lede" id="result-lede"></p>
       </div>
 
       <article class="doc">
-        <div class="note" id="done-panel"></div>
+        <div class="note" id="result-note"></div>
         <p class="doc-note">
-          <a href="../">Back to GubbiGo</a> ·
-          <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+          Questions? See <a href="../support/">Support</a> or email
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>.
         </p>
       </article>
     </main>
@@ -70,35 +71,39 @@
 
     <script>
       (function () {
-        var result = new URLSearchParams(location.search).get("result");
-        var copy = {
-          done: [
-            "Account deleted",
-            "Your GubbiGo account and the data we control for it have been deleted.",
-          ],
-          not_found: [
-            "No matching account",
-            "We could not find a GubbiGo account using that email. If you never saved progress with Google, there is likely nothing on our servers tied to it.",
-          ],
-          expired: [
-            "Link expired",
-            "This confirmation link is more than 24 hours old. Submit the delete-data form again to get a new one.",
-          ],
-          invalid: [
-            "Link not valid",
-            "This confirmation link is invalid or was already used.",
-          ],
-        }[result] || [
-          "Something went wrong",
-          "Email developer@xlang.in and we will help.",
-        ];
+        var COPY = {
+          done: {
+            title: "Your account has been deleted",
+            lede: "Your GubbiGo account and the data we control for it have been deleted.",
+            note:
+              "Uninstalling the app (if you haven't already) removes anything still stored on that device.",
+          },
+          not_found: {
+            title: "No matching account found",
+            lede: "We could not find a GubbiGo account using that email.",
+            note:
+              "If you never saved progress with Google, there is likely nothing on our servers tied to it - on-device data is already gone once you uninstall.",
+          },
+          expired: {
+            title: "This confirmation link expired",
+            lede: "Confirmation links are only valid for 24 hours.",
+            note: 'Go back to the <a href="./">delete-data form</a> and submit a new request - it will send a fresh link.',
+          },
+          invalid: {
+            title: "This link is invalid",
+            lede: "We couldn't match this link to a pending request.",
+            note:
+              'It may have already been used, or copied incorrectly. Go back to the <a href="./">delete-data form</a> and submit a new request if you still want your account deleted.',
+          },
+        };
 
-        document.getElementById("done-title").textContent = copy[0];
-        var panel = document.getElementById("done-panel");
-        panel.textContent = copy[1];
-        if (result === "done") {
-          panel.classList.add("form-status-ok");
-        }
+        var params = new URLSearchParams(window.location.search);
+        var result = params.get("result") || "invalid";
+        var copy = COPY[result] || COPY.invalid;
+
+        document.getElementById("result-title").textContent = copy.title;
+        document.getElementById("result-lede").textContent = copy.lede;
+        document.getElementById("result-note").innerHTML = copy.note;
       })();
     </script>
   </body>

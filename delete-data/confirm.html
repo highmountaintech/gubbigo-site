@@ -42,7 +42,10 @@
       <div class="page-header">
         <p class="eyebrow">Privacy</p>
         <h1>Confirm account deletion</h1>
-        <p class="lede">This is the last step. Deleting is permanent and cannot be undone.</p>
+        <p class="lede">
+          This confirms the deletion request you just received by email. Deletion only happens
+          after you click the button below.
+        </p>
       </div>
 
       <article class="doc">
@@ -53,17 +56,25 @@
         </div>
 
         <div id="confirm-box">
-          <p>
-            Clicking the button below will permanently delete your GubbiGo account and the cloud
-            progress we control for it. On-device data on any phone you installed GubbiGo on is
-            unaffected — uninstall the app there separately if you want that gone too.
-          </p>
+          <div class="note">
+            This cannot be undone. Your GubbiGo sign-in and the cloud lesson progress we control
+            for it will be deleted. On-device data on any phone you installed GubbiGo on is
+            unaffected; uninstall the app there separately if you want that gone too.
+          </div>
+
           <div class="form-actions">
             <button class="btn" id="delete-btn" type="button">
-              Yes, permanently delete my account and data
+              Yes, delete my account and data
             </button>
           </div>
+
           <p id="confirm-status" class="form-status" role="status" aria-live="polite"></p>
+
+          <p class="doc-note">
+            Changed your mind? Just close this page — nothing is deleted unless you click the
+            button above. See also <a href="../privacy/">Privacy</a> and
+            <a href="../support/">Support</a>.
+          </p>
         </div>
       </article>
     </main>
