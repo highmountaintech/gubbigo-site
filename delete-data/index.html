@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#173B63" />
     <meta
       name="description"
-      content="Request deletion of your GubbiGo account and the data we control. Uninstalling the app removes on-device progress. Super is cancelled in Google Play or the App Store."
+      content="Request deletion of your GubbiGo account and the data we control. Uninstalling the app removes on-device progress."
     />
     <title>Delete my data — GubbiGo</title>
     <link rel="icon" href="../favicon.png" type="image/png" />
@@ -48,23 +48,18 @@
 
       <article class="doc">
         <div class="note">
-          Uninstalling GubbiGo (or clearing app storage) deletes lessons, scores, and cached Super
-          status on that phone. It does <em>not</em> cancel Super. Cancel Super in
-          <a href="https://play.google.com/store/account/subscriptions" rel="noopener noreferrer"
-            >Google Play</a
-          >
-          or Settings → Apple ID → Subscriptions.
+          Uninstalling GubbiGo (or clearing app storage) deletes lessons, scores, and progress
+          cached on that phone. On-device data is only removable by you, this way.
         </div>
 
         <h2>What we delete when you submit this form</h2>
-        <p>If we can match your request to an account, we delete:</p>
+        <p>
+          We email a confirmation link to the address you give below. Click it, confirm on the
+          page it opens, and if we can match the account we delete:
+        </p>
         <ul>
-          <li>your GubbiGo sign-in (anonymous Firebase user, or Google-linked account);</li>
-          <li>cloud lesson progress stored for that user;</li>
-          <li>
-            the Super / RevenueCat customer record we can control for that user (the store still
-            keeps its own purchase history).
-          </li>
+          <li>your GubbiGo sign-in (the Google-linked account tied to that email);</li>
+          <li>cloud lesson progress stored for that account.</li>
         </ul>
 
         <h2>What we cannot delete from this form</h2>
@@ -74,38 +69,26 @@
             app storage.
           </li>
           <li>
-            <strong>Super billing</strong> — Google or Apple keep the purchase record. Cancel
-            auto-renewal in the store so Super does not renew.
-          </li>
-          <li>
             <strong>Technical logs</strong> — Expo or Cloudflare may retain ordinary request logs
             under their own policies. See the
             <a href="../privacy/">Privacy Policy</a>.
           </li>
         </ul>
         <p>
-          If we cannot find a matching account, we will still email you (at the address you give
-          below) and tell you what we checked.
+          If we cannot find a matching account, the confirmation page will tell you so — there is
+          likely nothing on our servers tied to that email.
         </p>
 
         <h2>How to identify your account</h2>
         <p>
-          If you tapped <strong>Save progress with Google</strong>, use that Google account email.
-          If you never saved with Google, on-device data is already gone after uninstall; we may
-          have little or nothing on our servers unless Super was bought on that install.
+          Use the Google account email you tapped <strong>Save progress with Google</strong>
+          with. If you never saved with Google, your progress is stored under an anonymous
+          account that has no email, so we cannot look it up here. It is deleted automatically
+          after 90 days without opening the app, and on-device data is gone once you uninstall.
         </p>
-        <p>Do not send payment card details or Google / Apple passwords.</p>
+        <p>Do not send passwords.</p>
 
-        <form
-          id="delete-request-form"
-          class="request-form"
-          action="https://formsubmit.co/developer@xlang.in"
-          method="POST"
-        >
-          <input type="hidden" name="_subject" value="Delete my data" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_honey" value="" />
+        <form id="delete-request-form" class="request-form">
           <div class="hp" aria-hidden="true">
             <label>
               Company
@@ -114,7 +97,7 @@
           </div>
 
           <div class="form-field">
-            <label for="email">Email we should reply to</label>
+            <label for="email">Email tied to your GubbiGo account</label>
             <input
               id="email"
               name="email"
@@ -124,54 +107,20 @@
               inputmode="email"
               placeholder="you@example.com"
             />
-            <p class="form-hint">We use this to confirm the request and tell you when it is done.</p>
-          </div>
-
-          <div class="form-field">
-            <label for="google_email">Google account used in GubbiGo (if any)</label>
-            <input
-              id="google_email"
-              name="google_email"
-              type="email"
-              autocomplete="off"
-              inputmode="email"
-              placeholder="Same as above, or leave blank"
-            />
             <p class="form-hint">
-              Fill this if you saved progress with Google and that address is different from the
-              reply email.
+              The Google account you used with <strong>Save progress with Google</strong>, if any.
+              We send the confirmation link here.
             </p>
           </div>
 
           <div class="form-field">
-            <label for="platform">Where you installed GubbiGo</label>
-            <select id="platform" name="platform" required>
-              <option value="" disabled selected>Choose one</option>
-              <option value="android">Android (Google Play)</option>
-              <option value="ios">iOS (App Store)</option>
-              <option value="both">Both</option>
-              <option value="unsure">Not sure</option>
-            </select>
-          </div>
-
-          <div class="form-field">
-            <label for="saved_with_google">Did you save progress with Google?</label>
-            <select id="saved_with_google" name="saved_with_google" required>
-              <option value="" disabled selected>Choose one</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-              <option value="unsure">Not sure</option>
-            </select>
-          </div>
-
-          <div class="form-field">
-            <label for="details">Anything else that helps us find the account (optional)</label>
+            <label for="note">Anything else that helps us find the account (optional)</label>
             <textarea
-              id="details"
-              name="details"
+              id="note"
+              name="note"
               rows="4"
-              maxlength="2000"
-              placeholder="For example: Super order ID, approximate sign-up date, or the learning language."
+              maxlength="1000"
+              placeholder="For example: approximate sign-up date, or the learning language."
             ></textarea>
           </div>
 
@@ -180,20 +129,6 @@
             <span>
               I want GubbiGo to delete my account and the associated data you control, as described
               on this page.
-            </span>
-          </label>
-
-          <label class="form-check">
-            <input
-              id="confirm_subscription"
-              name="confirm_subscription"
-              type="checkbox"
-              value="yes"
-              required
-            />
-            <span>
-              I understand that Super is cancelled only in Google Play or the App Store, not by
-              this form.
             </span>
           </label>
 
@@ -208,6 +143,12 @@
 
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
+
+        <div class="note form-status-ok" id="confirm-panel" hidden>
+          Check your email. We sent a confirmation link to the address you entered. Click it
+          within 24 hours to finish deleting your account. If you don't see it in a minute, check
+          spam.
+        </div>
 
         <p class="doc-note">
           Requests go to
@@ -239,89 +180,131 @@
       </div>
     </footer>
 
-    <script>
-      (function () {
-        var form = document.getElementById("delete-request-form");
-        var statusEl = document.getElementById("form-status");
-        var submitBtn = document.getElementById("delete-submit");
-        if (!form || !statusEl || !submitBtn) return;
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+      import {
+        getFirestore,
+        connectFirestoreEmulator,
+        collection,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+      import { firebaseConfig, appCheckConfig } from "../firebase-config.js";
 
-        function setStatus(message, kind) {
-          statusEl.textContent = message;
-          statusEl.className = "form-status" + (kind ? " form-status-" + kind : "");
-        }
+      var app = initializeApp(firebaseConfig);
 
-        function mailtoBody(data) {
-          return [
-            "Please delete my GubbiGo account and associated data.",
-            "",
-            "Reply email: " + data.email,
-            "Google account in GubbiGo: " + (data.google_email || "(not provided)"),
-            "Platform: " + data.platform,
-            "Saved with Google: " + data.saved_with_google,
-            "Notes: " + (data.details || "(none)"),
-          ].join("\n");
-        }
-
-        form.addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          if (form.elements.company && form.elements.company.value) {
-            setStatus("Request sent. We will email you at the address you provided.", "ok");
-            form.reset();
-            return;
-          }
-
-          var data = {
-            _subject: "Delete my data",
-            email: form.email.value.trim(),
-            google_email: form.google_email.value.trim(),
-            platform: form.platform.value,
-            saved_with_google: form.saved_with_google.value,
-            details: form.details.value.trim(),
-            confirm_delete: form.confirm_delete.checked ? "yes" : "no",
-            confirm_subscription: form.confirm_subscription.checked ? "yes" : "no",
-          };
-
-          submitBtn.disabled = true;
-          setStatus("Sending your request…");
-
-          fetch("https://formsubmit.co/ajax/developer@xlang.in", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then(function (response) {
-              if (!response.ok) throw new Error("Request failed");
-              return response.json();
-            })
-            .then(function () {
-              form.reset();
-              setStatus(
-                "Request sent. Check your inbox (including spam) for a confirmation, then wait for our reply. We aim to finish within 30 days.",
-                "ok"
-              );
-            })
-            .catch(function () {
-              var href =
-                "mailto:developer@xlang.in?subject=" +
-                encodeURIComponent("Delete my data") +
-                "&body=" +
-                encodeURIComponent(mailtoBody(data));
-              window.location.href = href;
-              setStatus(
-                "If your mail app did not open, email developer@xlang.in with the same details. Include the subject “Delete my data”.",
-                "warn"
-              );
-            })
-            .finally(function () {
-              submitBtn.disabled = false;
+      // App Check proves the request comes from this page and not a script posting
+      // straight to Firestore. It is loaded in the background and NEVER awaited at the
+      // top of this module: a slow or blocked script must not stop the form below from
+      // being wired up. The submit handler waits for it (briefly) just before the write,
+      // and any failure is swallowed, so a blocked script or a missing key cannot take the
+      // form down: an unattested write is simply refused by Firestore once enforcement is
+      // on, and the mail fallback below takes over.
+      var APP_CHECK_WAIT_MS = 5000;
+      var appCheckReady = Promise.resolve();
+      if (appCheckConfig && appCheckConfig.siteKey) {
+        appCheckReady = (async function () {
+          try {
+            if (location.hostname === "localhost") {
+              // Logs a debug token in the console; register it in Firebase console -> App Check.
+              self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+            }
+            var appCheckModule = await import(
+              "https://www.gstatic.com/firebasejs/10.14.1/firebase-app-check.js"
+            );
+            appCheckModule.initializeAppCheck(app, {
+              provider: new appCheckModule.ReCaptchaEnterpriseProvider(appCheckConfig.siteKey),
+              isTokenAutoRefreshEnabled: true,
             });
-        });
-      })();
+          } catch (error) {
+            console.warn("App Check could not start.");
+          }
+        })();
+      }
+
+      // Firestore is created only after App Check had its chance to start, and only once.
+      var db = null;
+      function getDb() {
+        if (!db) {
+          db = getFirestore(app);
+          if (location.hostname === "localhost") {
+            connectFirestoreEmulator(db, "localhost", 8080);
+          }
+        }
+        return db;
+      }
+
+      function appCheckSettled() {
+        return Promise.race([
+          appCheckReady,
+          new Promise(function (resolve) {
+            setTimeout(resolve, APP_CHECK_WAIT_MS);
+          }),
+        ]);
+      }
+
+      var form = document.getElementById("delete-request-form");
+      var statusEl = document.getElementById("form-status");
+      var submitBtn = document.getElementById("delete-submit");
+      var confirmPanel = document.getElementById("confirm-panel");
+
+      function setStatus(message, kind) {
+        statusEl.textContent = message;
+        statusEl.className = "form-status" + (kind ? " form-status-" + kind : "");
+      }
+
+      function mailtoHref(email, note) {
+        var body = [
+          "Please delete my GubbiGo account and associated data.",
+          "",
+          "Email: " + email,
+          "Notes: " + (note || "(none)"),
+        ].join("\n");
+        return (
+          "mailto:developer@xlang.in?subject=" +
+          encodeURIComponent("Delete my data") +
+          "&body=" +
+          encodeURIComponent(body)
+        );
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Honeypot: bots that fill every field get a fake success, no write.
+        if (form.elements.company && form.elements.company.value) {
+          form.reset();
+          setStatus("Request sent.", "ok");
+          return;
+        }
+
+        var email = form.email.value.trim().toLowerCase();
+        var note = form.note.value.trim();
+
+        submitBtn.disabled = true;
+        setStatus("Sending your request…");
+
+        var payload = note ? { email: email, note: note } : { email: email };
+
+        appCheckSettled()
+          .then(function () {
+            return addDoc(collection(getDb(), "deletionRequests"), payload);
+          })
+          .then(function () {
+            form.hidden = true;
+            confirmPanel.hidden = false;
+            setStatus("");
+          })
+          .catch(function () {
+            window.location.href = mailtoHref(email, note);
+            setStatus(
+              "Could not send your request automatically. If your mail app did not open, email developer@xlang.in with the same details.",
+              "warn"
+            );
+          })
+          .finally(function () {
+            submitBtn.disabled = false;
+          });
+      });
     </script>
   </body>
 </html>

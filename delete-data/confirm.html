@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173B63" />
+    <meta name="robots" content="noindex" />
+    <meta name="referrer" content="no-referrer" />
+    <!--
+      This page handles a one-time deletion token, so it loads nothing from third
+      parties (no web fonts, no analytics) and may only talk to the deletion
+      functions. GitHub Pages cannot set response headers, hence a meta policy.
+      Keep connect-src in step with FINALIZE_URLS in confirm.js.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://asia-south1-gubbigo-firebase.cloudfunctions.net https://asia-south1-gubbigo-firebase-dev.cloudfunctions.net http://127.0.0.1:5001; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="description" content="Confirm deletion of your GubbiGo account and data." />
+    <title>Confirm deletion — GubbiGo</title>
+    <link rel="icon" href="../favicon.png" type="image/png" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="GubbiGo home">
+          <img src="../logo.svg" width="36" height="36" alt="" />
+          <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site">
+          <a href="../">Home</a>
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./">Delete data</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-header">
+        <p class="eyebrow">Privacy</p>
+        <h1>Confirm account deletion</h1>
+        <p class="lede">This is the last step. Deleting is permanent and cannot be undone.</p>
+      </div>
+
+      <article class="doc">
+        <div class="note" id="link-error" hidden>
+          This link is missing information or is not valid, so it can't be used. If you opened it
+          from your email, open the link in that email again. Otherwise go back to
+          <a href="./">the delete-data form</a> and submit it again.
+        </div>
+
+        <div id="confirm-box">
+          <p>
+            Clicking the button below will permanently delete your GubbiGo account and the cloud
+            progress we control for it. On-device data on any phone you installed GubbiGo on is
+            unaffected — uninstall the app there separately if you want that gone too.
+          </p>
+          <div class="form-actions">
+            <button class="btn" id="delete-btn" type="button">
+              Yes, permanently delete my account and data
+            </button>
+          </div>
+          <p id="confirm-status" class="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="../" aria-label="GubbiGo home">
+            <img src="../logo.svg" width="36" height="36" alt="" />
+            <span class="wordmark"><span class="gubbi">Gubbi</span><span class="go">Go</span></span>
+          </a>
+          <p>Indian language lessons that stay on your device.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="../privacy/">Privacy</a>
+          <a href="../terms/">Terms</a>
+          <a href="../support/">Support</a>
+          <a href="./">Delete data</a>
+          <a href="mailto:developer@xlang.in">developer@xlang.in</a>
+        </nav>
+        <p class="copyright">© 2026 GubbiGo</p>
+      </div>
+    </footer>
+
+    <script src="confirm.js"></script>
+  </body>
+</html>
