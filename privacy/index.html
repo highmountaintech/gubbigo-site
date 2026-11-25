@@ -39,7 +39,7 @@
       <div class="page-header">
         <p class="eyebrow">Legal</p>
         <h1>Privacy Policy</h1>
-        <p class="meta">Effective date: 25 October 2026 · Last updated: 20 November 2026</p>
+        <p class="meta">Effective date: 25 October 2026 · Last updated: 25 November 2026</p>
       </div>
 
       <article class="doc">
@@ -88,15 +88,17 @@
           and email. Lessons use seeds, which refill over time. When you are out of seeds you can
           watch an optional rewarded ad for one more. The Home screen also shows a banner ad. Ads
           come from Google AdMob and are requested as non-personalised and child-directed. The app
-          downloads language packs when you need them and may check Expo for an app update.
+          sends crash and error reports to Firebase Crashlytics so we can fix bugs, downloads
+          language packs when you need them, and may check Expo for an app update.
         </div>
         <p>This policy covers:</p>
         <ul>
           <li>progress stored on the device;</li>
           <li>the Firebase account and the progress saved for it;</li>
           <li>
-            technical data processed by Google Play, Firebase (including App Check), Google
-            Sign-In, Google AdMob, Expo, our email provider, and our content host.
+            technical data processed by Google Play, Firebase (including App Check and
+            Crashlytics), Google Sign-In, Google AdMob, Expo, our email provider, and our content
+            host.
           </li>
         </ul>
       </section>
@@ -234,6 +236,21 @@
               </td>
             </tr>
             <tr>
+              <td>Firebase Crashlytics</td>
+              <td>
+                Receives crash and error reports so we can find and fix bugs. A report can include
+                the error message and where in the app it happened, the app version, the device
+                model and Android version, whether the device was online, and a random installation
+                id for the app on that device. Reports are not linked to your name, email, account
+                id, or lesson progress, and we do not put those in an error message.
+              </td>
+              <td>
+                <a href="https://firebase.google.com/support/privacy" rel="noopener noreferrer"
+                  >Firebase Privacy Information</a
+                >
+              </td>
+            </tr>
+            <tr>
               <td>Google Play</td>
               <td>App install and store updates on Android</td>
               <td>
@@ -258,9 +275,12 @@
                 Shows the banner on the Home screen and the optional rewarded ad. Ads are requested
                 as non-personalised and child-directed, and limited to content rated for general
                 audiences (G). Where required, Google’s consent message is shown before any ad is
-                requested. Google may receive device information, an IP address, and how an ad was
-                used, so it can deliver and measure it. Lesson progress, name, and email are not
-                sent for this.
+                requested. Google may receive device information, an IP address (which can indicate your
+                approximate location), device identifiers such as an app-set id and, where the app
+                has access to it, the Android advertising id, diagnostic information about how
+                the ad and the app performed, and how an ad was used (for example launches, taps,
+                and video views), so it can deliver and measure ads and prevent fraud. Lesson
+                progress, name, and email are not sent for this.
               </td>
               <td>
                 <a
@@ -311,8 +331,10 @@
         </table>
         <h3>Technical detail</h3>
         <p>
-          We do not include crash-reporting or general product analytics SDKs. The only SDK that
-          shows third-party content is Google AdMob, as described in section 7.
+          We use Firebase Crashlytics for crash and error reports only. We do not add separate
+          product-analytics tools that track what you do in lessons. The only SDK that shows
+          third-party content is Google AdMob, as described in section 7. AdMob also measures how
+          ads perform, as described in the table above.
         </p>
       </section>
 
@@ -391,8 +413,8 @@
           </li>
           <li><strong>Audio playback</strong> — to play lesson and word audio. The app does not record audio;</li>
           <li>
-            <strong>Advertising</strong> — the ad SDK may read device information needed to deliver
-            and measure ads, which are requested as non-personalised;
+            <strong>Advertising</strong> — the ad SDK may read device information and identifiers
+            needed to deliver and measure ads, which are requested as non-personalised;
           </li>
           <li>
             <strong>Local storage</strong> — to keep progress, downloaded lessons and audio, and
@@ -440,6 +462,11 @@
             <strong>Rewarded-ad count:</strong> stays on the device and resets when lesson progress
             on the device is cleared. It is not saved in Firebase. Google may keep its own ad
             measurement records under its policy.
+          </li>
+          <li>
+            <strong>Crash and error reports:</strong> held by Google (Firebase Crashlytics) for a
+            limited period under Firebase’s terms. They are not linked to your account, so deleting
+            your account does not remove them.
           </li>
           <li>
             <strong>Download and update logs:</strong> Expo or Cloudflare may retain ordinary
